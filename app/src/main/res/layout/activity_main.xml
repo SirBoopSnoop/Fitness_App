@@ -39,7 +39,22 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:navigationIcon="@drawable/menu"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     </ScrollView>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/create_button"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="+"
+            android:textSize="40sp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
+

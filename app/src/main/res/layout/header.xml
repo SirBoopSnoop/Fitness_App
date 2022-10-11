@@ -10,10 +10,10 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-condensed-light"
+        android:fontFamily="sans-serif-condensed-medium"
         android:paddingLeft="25dp"
         android:text="Select a category"
-        android:textSize="65sp"
+        android:textSize="64sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
