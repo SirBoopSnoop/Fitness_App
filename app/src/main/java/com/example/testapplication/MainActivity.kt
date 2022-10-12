@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
         /*--------------------------Hooks--------------------------------*/
         toolbar = findViewById<Toolbar>(R.id.toolbar)
-        val NavigationView = findViewById<NavigationView>(R.id.nav_view)
+        navigationView = findViewById<NavigationView>(R.id.nav_view)
         drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
 
         /*--------------------------Tool Bar-----------------------------*/
