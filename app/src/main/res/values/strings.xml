@@ -4,4 +4,11 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="reps">reps</string>
+    <string name="add_video">Add video</string>
+    <string name="sets">Sets</string>
+    <string name="intensity">Intensity</string>
+    <string name="break_time">Break time</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
 </resources>
