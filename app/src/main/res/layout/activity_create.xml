@@ -2,18 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar2"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <RadioGroup
             android:id="@+id/weight_group"
@@ -22,7 +14,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar2">
+            tools:ignore="MissingConstraints">
 
                 <RadioButton
                     android:id="@+id/radio_body"
@@ -51,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Add video"
+            android:text="@string/add_video"
             android:layout_marginTop="50dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -64,7 +56,7 @@
             android:layout_centerHorizontal="true"
             android:ems="10"
             android:inputType="numberDecimal"
-            android:text="Reps"
+            android:hint="@string/reps"
             android:layout_marginTop="50dp"
             app:layout_constraintTop_toBottomOf="@+id/add_video"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -78,7 +70,7 @@
             android:layout_centerHorizontal="true"
             android:ems="10"
             android:inputType="numberDecimal"
-            android:text="Sets"
+            android:hint="@string/sets"
             app:layout_constraintTop_toBottomOf="@+id/reps_value"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
@@ -90,7 +82,7 @@
             android:layout_centerHorizontal="true"
             android:ems="10"
             android:inputType="numberDecimal"
-            android:text="Intensity"
+            android:hint="@string/intensity"
             app:layout_constraintTop_toBottomOf="@+id/sets_value"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
@@ -102,7 +94,7 @@
             android:layout_centerHorizontal="true"
             android:ems="10"
             android:inputType="numberDecimal"
-            android:text="Break time"
+            android:hint="@string/break_time"
             app:layout_constraintTop_toBottomOf="@+id/intensity_value"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
@@ -123,7 +115,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Cancel"
+                    android:text="@string/cancel"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -134,7 +126,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Save"
+                    android:text="@string/save"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
