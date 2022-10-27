@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_cardio"
+            android:title="Cardio"
+            android:icon="@drawable/cardio_icon"/>
+
+        <item
+            android:id="@+id/nav_arms"
+            android:title="Arms"
+            android:icon="@drawable/arm_icon"/>
+
+        <item
+            android:id="@+id/nav_chest"
+            android:title="Chest"
+            android:icon="@drawable/chest_icon"/>
+
+        <item
+            android:id="@+id/nav_abs"
+            android:title="Abs"
+            android:icon="@drawable/abs_icon"/>
+
+        <item
+            android:id="@+id/nav_legs"
+            android:title="Legs"
+            android:icon="@drawable/leg_icon"/>
+
+        <item
+            android:id="@+id/nav_back"
+            android:title="Back"
+            android:icon="@drawable/back_icon"/>
+
+    </group>
+
+</menu>
