@@ -11,4 +11,11 @@
     <string name="break_time">Break time</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+    <string name="exercise_category">Pick an exercise category</string>
+    <string name="cardio">Cardio</string>
+    <string name="arms">Arms</string>
+    <string name="chest">Chest</string>
+    <string name="abs">Abs</string>
+    <string name="legs">Legs</string>
+    <string name="back">Back</string>
 </resources>
