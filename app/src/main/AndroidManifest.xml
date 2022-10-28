@@ -3,6 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.testapplication">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <queries>
+        <intent>
+            <action android:name="com.google.android.youtube.api.service.START"/>
+        </intent>
+    </queries>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,6 +22,7 @@
         android:theme="@style/Theme.TestApplication"
         tools:targetApi="31">
         <activity android:name=".CreateActivity"/>
+        <activity android:name=".ViewExerciseActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -25,5 +34,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
