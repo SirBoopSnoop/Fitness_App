@@ -15,10 +15,11 @@ class CreateActivity : AppCompatActivity() {
         binding = ActivityCreateBinding.inflate(layoutInflater) //initializing the binding class
         setContentView(binding.root) //contentView as binding.root
 
-        var repValue = binding.repsValue.reps_value
+/*        var repValue = binding.repsValue.reps_value
         var setValue = binding.setsValue.sets_value
         var intensityValue = binding.intensityValue.intensity_value
-        var breakTimeValue = binding.breakTimeValue.break_time_value
+        var breakTimeValue = binding.breakTimeValue.break_time_value*/
 
+        binding.cancelButton.setOnClickListener {finish()}
     }
 }
