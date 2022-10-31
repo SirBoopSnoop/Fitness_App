@@ -1,6 +1,10 @@
 package com.example.testapplication
 
+import android.content.Intent
+import android.content.IntentSender
 import android.os.Bundle
+import android.view.View
+import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
@@ -28,33 +32,17 @@ class CreateActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT).show()
             })
 
-        val exerciseName = binding.exerciseName
-        val reps = binding.repsValue
-        val sets = binding.setsValue
-        val intensity = binding.intensityValue
-        val breakTime = binding.breakTimeValue
-/*        val radioId: Int = binding.categoryGroup.checkedRadioButtonId
-        val radioButton = findViewById<RadioButton>(radioId)*//*
-        binding.saveButton.setOnClickListener {
-            Toast.makeText(
-                applicationContext, "Following data: " + " ${exerciseName.text}\n" +
-                        "${reps.text}\n" +
-                        "${sets.text}\n" +
-                        "${intensity.text}\n" +
-                        "${breakTime.text}\n" *//*+
-                        "${radioButton.text}\n"*//*, Toast.LENGTH_LONG
-            ).show()
-        }*/
-
         // Get radio group selected status and text using button click event
         binding.saveButton.setOnClickListener {
             // Get the checked radio button id from radio group
             val id: Int = category_group.checkedRadioButtonId
             if (id != -1) { //If none of the radio button is selected
+                exerciseDataSender()
                 val selectedRadio: RadioButton = findViewById(id)
                 Toast.makeText(
                     applicationContext, "Exercise plan created:" + "${selectedRadio.text}",
                     Toast.LENGTH_SHORT).show()
+                    finish()
             } else {
                 // If none of the radio button is selected
                 Toast.makeText(
@@ -62,6 +50,21 @@ class CreateActivity : AppCompatActivity() {
             }
         }
 
+        //Makes the cancel button goes back to the main activity
         binding.cancelButton.setOnClickListener {finish()}
+    }
+
+    private fun exerciseDataSender() {
+        val senderIntent = Intent(this, MainActivity::class.java).also {
+            it.putExtra("NAME_MESSAGE", binding.exerciseName.text.toString())
+            it.putExtra("REPS_MESSAGE", binding.repsValue.text.toString())
+            it.putExtra("SETS_MESSAGE", binding.setsValue.text.toString())
+            it.putExtra("INTENSITY_MESSAGE", binding.intensityValue.text.toString())
+            it.putExtra("BREAK_MESSAGE", binding.breakTimeValue.text.toString())
+            val id: Int = category_group.checkedRadioButtonId
+            val selectedRadio: RadioButton = findViewById(id)
+            it.putExtra("RADIO_MESSAGE", selectedRadio.text.toString())
+            startActivity(it)
+        }
     }
 }

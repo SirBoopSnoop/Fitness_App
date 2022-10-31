@@ -3,37 +3,36 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.MediaController
-import android.widget.Toast
-import android.widget.VideoView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
-import com.google.android.youtube.player.YouTubeBaseActivity
-import com.google.android.youtube.player.YouTubeInitializationResult
-import com.google.android.youtube.player.YouTubePlayer
-import com.google.android.youtube.player.YouTubePlayerView
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
-import java.util.regex.Pattern
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
     //Variables
     lateinit var toolbar: Toolbar
     lateinit var navigationView: NavigationView
     lateinit var drawerLayout: DrawerLayout
 
+    //Variables for RecyclerView
+    private lateinit var exerciseRecyclerView: RecyclerView
+    private lateinit var exerciseArrayList: ArrayList<ExerciseModel>
+    private lateinit var exerciseAdapter: ExerciseAdapter
+    lateinit var exerciseName : Array<ExerciseModel>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+//        val message = intent.getStringExtra("RADIO_MESSAGE")
+//
+//        val textView = findViewById<TextView>(R.id.textView2).apply {
+//            text = message
+//        }
 
         /*test_button.setOnClickListener {
 
@@ -74,8 +73,41 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         navigationView.setNavigationItemSelectedListener(this)
 
+
+/*        exerciseName = arrayOf(
+            "exercise1",
+            "exercise2",
+            "exercise3"
+        )*/
+
+        exerciseRecyclerView = findViewById(R.id.exercise_RecyclerView)
+
+        // Creates a vertical Layout Manager
+        exercise_RecyclerView.layoutManager = LinearLayoutManager(this)
+        exerciseRecyclerView.setHasFixedSize(true)
+
+
+/*        val adapter = ExerciseAdapter(exerciseArrayList)
+        exerciseRecyclerView.adapter = adapter*/
+        exerciseAdapter = ExerciseAdapter(exerciseArrayList)
+
+        // Access the RecyclerView Adapter and load the data into it
+/*        exercise_RecyclerView.adapter = ExerciseAdapter(exerciseArrayList)*/
+
+        exerciseArrayList = ArrayList()
+        exerciseRecyclerView.adapter = exerciseAdapter
+        getExerciseData()
     }
 
+    private fun getExerciseData() {
+/*        for(i in exerciseName.indices) {
+            val exercise = ExerciseModel(exerciseName[i])
+            exerciseArrayList.add(exercise)
+        }*/
+
+        exerciseArrayList.add(ExerciseModel("Exercise1"))
+        exerciseArrayList.add(ExerciseModel("Exercise2"))
+    }
 
     override fun onBackPressed() {
 
@@ -91,5 +123,4 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return true
     }
-
 }
