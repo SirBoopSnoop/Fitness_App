@@ -3,13 +3,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.activity_create.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -18,21 +19,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var navigationView: NavigationView
     lateinit var drawerLayout: DrawerLayout
 
-    //Variables for RecyclerView
-    private lateinit var exerciseRecyclerView: RecyclerView
-    private lateinit var exerciseArrayList: ArrayList<ExerciseModel>
-    private lateinit var exerciseAdapter: ExerciseAdapter
-    lateinit var exerciseName : Array<ExerciseModel>
+    var exerciseList = getExerciseData()
+    var adapter = ExerciseAdapter(exerciseList)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        val message = intent.getStringExtra("RADIO_MESSAGE")
-//
-//        val textView = findViewById<TextView>(R.id.textView2).apply {
-//            text = message
-//        }
+/*        val message = intent?.getStringExtra("RADIO_MESSAGE")
+
+        val textView = findViewById<TextView>(R.id.textView2).apply {
+            text = message
+        }*/
 
         /*test_button.setOnClickListener {
 
@@ -73,40 +71,34 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         navigationView.setNavigationItemSelectedListener(this)
 
-
-/*        exerciseName = arrayOf(
-            "exercise1",
-            "exercise2",
-            "exercise3"
-        )*/
-
-        exerciseRecyclerView = findViewById(R.id.exercise_RecyclerView)
+/*        val exerciseList = getExerciseData()*/
 
         // Creates a vertical Layout Manager
         exercise_RecyclerView.layoutManager = LinearLayoutManager(this)
-        exerciseRecyclerView.setHasFixedSize(true)
-
-
-/*        val adapter = ExerciseAdapter(exerciseArrayList)
-        exerciseRecyclerView.adapter = adapter*/
-        exerciseAdapter = ExerciseAdapter(exerciseArrayList)
 
         // Access the RecyclerView Adapter and load the data into it
-/*        exercise_RecyclerView.adapter = ExerciseAdapter(exerciseArrayList)*/
-
-        exerciseArrayList = ArrayList()
-        exerciseRecyclerView.adapter = exerciseAdapter
-        getExerciseData()
+        exercise_RecyclerView.adapter = adapter
+        exercise_RecyclerView.setHasFixedSize(true)
     }
 
-    private fun getExerciseData() {
-/*        for(i in exerciseName.indices) {
-            val exercise = ExerciseModel(exerciseName[i])
-            exerciseArrayList.add(exercise)
+    private fun getExerciseData() : ArrayList<ExerciseModel> {
+        val list = ArrayList<ExerciseModel>()
+        val nameMessage = intent?.getStringExtra("NAME_MESSAGE")
+        val exerciseModel = ExerciseModel(nameMessage)
+        val nameDummy = "Exercise1"
+        list.add(exerciseModel)
+/*        if (nameMessage != null) {
+            for(i in 0 until size) {
+                val item = ExerciseModel(nameMessage)
+                list += item
+            }
         }*/
 
-        exerciseArrayList.add(ExerciseModel("Exercise1"))
-        exerciseArrayList.add(ExerciseModel("Exercise2"))
+/*        val index: Int = exerciseList.size
+        val nameMessage = ExerciseModel("Potato")
+        exerciseList.add(index,nameMessage)
+        adapter.notifyItemInserted(index)*/
+        return list
     }
 
     override fun onBackPressed() {

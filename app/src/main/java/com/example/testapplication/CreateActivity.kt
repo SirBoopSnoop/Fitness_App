@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.testapplication.databinding.ActivityCreateBinding
 import kotlinx.android.synthetic.main.activity_create.*
 
-
 class CreateActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCreateBinding //defining the binding class
@@ -34,21 +33,23 @@ class CreateActivity : AppCompatActivity() {
 
         // Get radio group selected status and text using button click event
         binding.saveButton.setOnClickListener {
-            // Get the checked radio button id from radio group
-            val id: Int = category_group.checkedRadioButtonId
-            if (id != -1) { //If none of the radio button is selected
-                exerciseDataSender()
-                val selectedRadio: RadioButton = findViewById(id)
-                Toast.makeText(
-                    applicationContext, "Exercise plan created:" + "${selectedRadio.text}",
-                    Toast.LENGTH_SHORT).show()
+                // Get the checked radio button id from radio group
+                val id: Int = category_group.checkedRadioButtonId
+                if (id != -1) { //If none of the radio button is selected
+                    exerciseDataSender()
+                    val selectedRadio: RadioButton = findViewById(id)
+                    Toast.makeText(
+                        applicationContext, "Exercise plan created:" + "${selectedRadio.text}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     finish()
-            } else {
-                // If none of the radio button is selected
-                Toast.makeText(
-                    applicationContext, "Please select a category", Toast.LENGTH_SHORT).show()
+                } else {
+                    // If none of the radio button is selected
+                    Toast.makeText(
+                        applicationContext, "Please select a category", Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
-        }
 
         //Makes the cancel button goes back to the main activity
         binding.cancelButton.setOnClickListener {finish()}
@@ -66,5 +67,10 @@ class CreateActivity : AppCompatActivity() {
             it.putExtra("RADIO_MESSAGE", selectedRadio.text.toString())
             startActivity(it)
         }
+/*        val index = 1
+        val newItem = ExerciseModel(binding.exerciseName.text.toString())
+        val mainActivity = MainActivity()
+        mainActivity.exerciseList.add(index, newItem)
+        mainActivity.adapter.notifyItemInserted(index)*/
     }
 }

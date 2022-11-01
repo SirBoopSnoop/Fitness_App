@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.activity_create.view.*
+import kotlinx.android.synthetic.main.recyclerview_design.view.*
 
 class ExerciseAdapter(private val exerciseList : ArrayList<ExerciseModel>) :
     RecyclerView.Adapter<ExerciseAdapter.ExerciseViewHolder>() {
@@ -23,7 +25,7 @@ class ExerciseAdapter(private val exerciseList : ArrayList<ExerciseModel>) :
         //Based on the position of the recycler view
         val currentItem = exerciseList[position]
 /*        holder.exerciseImage.setImageResource(currentItem.category)*/
-        holder.exerciseName.text = currentItem.exerciseName
+        holder.textView1.text = currentItem.exerciseName
     }
 
     override fun getItemCount(): Int {
@@ -33,9 +35,8 @@ class ExerciseAdapter(private val exerciseList : ArrayList<ExerciseModel>) :
 
     class ExerciseViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         //Grabbing the views from our recycler_design layout file
-        //Kinda like in the onCreate Method
 
-        val exerciseName : TextView = itemView.findViewById(R.id.textView)
+        val textView1 : TextView = itemView.exercise_textView
 /*        val exerciseImage : ImageView = itemView.findViewById(R.id.exercise_image)*/
     }
 }
