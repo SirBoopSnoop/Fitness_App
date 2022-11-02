@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
 /*        val message = intent?.getStringExtra("RADIO_MESSAGE")
 
         val textView = findViewById<TextView>(R.id.textView2).apply {

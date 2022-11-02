@@ -3,9 +3,12 @@ package com.example.testapplication
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.widget.Toast
+import com.example.testapplication.databinding.ActivityCreateBinding
+import com.example.testapplication.databinding.ActivityViewexerciseBinding
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_viewexercise.*
 import java.util.regex.Pattern
@@ -13,8 +16,10 @@ import kotlin.String
 
 class ViewExerciseActivity : YouTubeBaseActivity() {
 
+    private lateinit var binding : ActivityViewexerciseBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityViewexerciseBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val extras : Bundle? = intent.extras
