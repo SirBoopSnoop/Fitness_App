@@ -1,13 +1,13 @@
 package com.example.testapplication
 
-data class Exercise(val exerciseName : String,
+data class Exercise(val exerciseName : String? = null,
                     val videoUrl : String? = null,
-                    val reps : Int,
-                    val sets : Int,
+                    val reps : Int? = null,
+                    val sets : Int? = null,
                     val duration : Double? = null,
                     val intensity : Double? = null,
-                    val breakTime : Int,
-                    val category : String,
+                    val breakTime : Int? = null,
+                    val category : String? = null,
                     val description : String? = null)
 
 

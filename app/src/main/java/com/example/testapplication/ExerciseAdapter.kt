@@ -10,6 +10,32 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_create.view.*
 import kotlinx.android.synthetic.main.recyclerview_design.view.*
 
+
+class ExerciseAdapter(private val exerciseList : ArrayList<Exercise>) : RecyclerView.Adapter<ExerciseAdapter.MyViewHolder>(){
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_design, parent, false)
+        return MyViewHolder(itemView)
+    }
+
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        val currentItem = exerciseList[position]
+
+        holder.exerciseName.text = currentItem.exerciseName
+    }
+
+    override fun getItemCount(): Int {
+        return exerciseList.size
+    }
+
+    class MyViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
+        val exerciseName : TextView = itemView.findViewById(R.id.exercise_textView)
+    }
+}
+
+
+/*
 class ExerciseAdapter(private val exerciseList : ArrayList<ExerciseModel>) :
     RecyclerView.Adapter<ExerciseAdapter.ExerciseViewHolder>() {
 
@@ -24,7 +50,9 @@ class ExerciseAdapter(private val exerciseList : ArrayList<ExerciseModel>) :
         //Assigning values to the views were created in the recycler_design layout file
         //Based on the position of the recycler view
         val currentItem = exerciseList[position]
-/*        holder.exerciseImage.setImageResource(currentItem.category)*/
+*/
+/*        holder.exerciseImage.setImageResource(currentItem.category)*//*
+
         holder.textView1.text = currentItem.exerciseName
     }
 
@@ -37,6 +65,8 @@ class ExerciseAdapter(private val exerciseList : ArrayList<ExerciseModel>) :
         //Grabbing the views from our recycler_design layout file
 
         val textView1 : TextView = itemView.exercise_textView
-/*        val exerciseImage : ImageView = itemView.findViewById(R.id.exercise_image)*/
+*/
+/*        val exerciseImage : ImageView = itemView.findViewById(R.id.exercise_image)*//*
+
     }
-}
+}*/

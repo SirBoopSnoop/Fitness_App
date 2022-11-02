@@ -13,13 +13,13 @@ import androidx.constraintlayout.widget.Group
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerView
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
@@ -32,9 +32,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var toolbar: Toolbar
     lateinit var navigationView: NavigationView
     lateinit var drawerLayout: DrawerLayout
+    lateinit var database : DatabaseReference
+    lateinit var exerciseList : ArrayList<Exercise>
+    lateinit var recyclerView : RecyclerView
 
-    var exerciseList = getExerciseData()
-    var adapter = ExerciseAdapter(exerciseList)
+    /*var exerciseList = getExerciseData()
+    var adapter = ExerciseAdapter(exerciseList)*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +59,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }.addOnFailureListener { Toast.makeText(this, "Failed...", Toast.LENGTH_SHORT).show() }
 
         }*/
+        recyclerView = findViewById(R.id.exercise_RecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.setHasFixedSize(true)
+
+        exerciseList = arrayListOf<Exercise>()
+        getData()
+
+
 
         btnPlay.setOnClickListener {
             Intent(this, ViewExerciseActivity::class.java).also{
@@ -89,11 +100,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView.setNavigationItemSelectedListener(this)
 
         // Creates a vertical Layout Manager
-        exercise_RecyclerView.layoutManager = LinearLayoutManager(this)
+/*        exercise_RecyclerView.layoutManager = LinearLayoutManager(this)
 
         // Access the RecyclerView Adapter and load the data into it
         exercise_RecyclerView.adapter = adapter
-        exercise_RecyclerView.setHasFixedSize(true)
+        exercise_RecyclerView.setHasFixedSize(true)*/
+    }
+
+    private fun getData() {
+        database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("TestData")
+
+        database.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+            if (snapshot.exists()){
+                for (exerciseSnapshot in snapshot.children) {
+                    val exercise = exerciseSnapshot.getValue(Exercise::class.java)
+                    exerciseList.add(exercise!!)
+                }
+                recyclerView.adapter = ExerciseAdapter(exerciseList)
+            }
+        }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
     }
 
     private fun getExerciseData() : ArrayList<ExerciseModel> {
@@ -102,6 +133,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val nameMessage = intent?.getStringExtra("NAME_MESSAGE")
         val exerciseModel = ExerciseModel(nameMessage)
         list.add(ExerciseModel(nameMessage))
+
 /*
         if (nameMessage != null) {
             for(i in 0 until size) {
