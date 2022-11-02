@@ -36,19 +36,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var exerciseList : ArrayList<Exercise>
     lateinit var recyclerView : RecyclerView
 
-    /*var exerciseList = getExerciseData()
-    var adapter = ExerciseAdapter(exerciseList)*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-/*        val message = intent?.getStringExtra("RADIO_MESSAGE")
-
-        val textView = findViewById<TextView>(R.id.textView2).apply {
-            text = message
-        }*/
 
         /*test_button.setOnClickListener {
 
@@ -125,28 +117,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 TODO("Not yet implemented")
             }
         })
-    }
-
-    private fun getExerciseData() : ArrayList<ExerciseModel> {
-        val list = ArrayList<ExerciseModel>()
-        val nameDummy = "Exercise1"
-        val nameMessage = intent?.getStringExtra("NAME_MESSAGE")
-        val exerciseModel = ExerciseModel(nameMessage)
-        list.add(ExerciseModel(nameMessage))
-
-/*
-        if (nameMessage != null) {
-            for(i in 0 until size) {
-                val item = ExerciseModel(nameMessage)
-                list += item
-            }
-        }
-
-        val index: Int = exerciseList.size
-        val nameMessage = intent?.getStringExtra("NAME_MESSAGE")
-        list.add(index, ExerciseModel(nameMessage))
-        adapter.notifyItemInserted(index)*/
-        return list
     }
 
     override fun onBackPressed() {
