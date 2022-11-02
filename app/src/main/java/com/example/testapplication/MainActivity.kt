@@ -45,6 +45,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         btnPlay.setOnClickListener {
             Intent(this, ViewExerciseActivity::class.java).also{
+                val value = "New exercise"
+                it.putExtra("key", value)
                 startActivity(it)
             }
         }

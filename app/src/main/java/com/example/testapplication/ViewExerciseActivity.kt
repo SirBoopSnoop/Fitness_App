@@ -3,18 +3,48 @@ package com.example.testapplication
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.widget.Toast
+import com.example.testapplication.databinding.ActivityViewexerciseBinding
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_viewexercise.*
 import java.util.regex.Pattern
 
 class ViewExerciseActivity : YouTubeBaseActivity() {
 
+    private lateinit var binding : ActivityViewexerciseBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_viewexercise)
+        binding = ActivityViewexerciseBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        val extras : Bundle? = intent.extras
+        if (extras != null){
+            var value : String? = extras.getString("key")
+            val path = value.toString()
+            val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("TestData")
+            database.child(path).get().addOnSuccessListener {
+
+                if(it.exists()){
+
+                    val exerciseName = it.child("exerciseName").value.toString()
+                    val breakTime = it.child("breakTime").value.toString()
+                    val category = it.child("category").value.toString()
+                    val intensity = it.child("intensity").value.toString()
+                    val reps = it.child("reps").value.toString()
+                    val sets = it.child("sets").value.toString()
+
+                    binding.exerciseNameView.text = exerciseName
+                    binding.breakView.append(breakTime)
+                    binding.repsView.append(reps)
+                    binding.setsView.append(sets)
+
+                }
+            }
+        }
+
 
         initializePlayer(getYoutubeVideoIdFromUrl("https://www.youtube.com/watch?v=DkWokwdxCIU")!!)
     }

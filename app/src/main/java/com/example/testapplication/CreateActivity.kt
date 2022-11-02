@@ -25,7 +25,7 @@ class CreateActivity : AppCompatActivity() {
         category_group.setOnCheckedChangeListener(
             RadioGroup.OnCheckedChangeListener { group, checkedId ->
                 val radio: RadioButton = findViewById(checkedId)
-                Toast.makeText(applicationContext," On checked change :"+
+                Toast.makeText(applicationContext,"On checked change: "+
                         " ${radio.text}",
                     Toast.LENGTH_SHORT).show()
             })
