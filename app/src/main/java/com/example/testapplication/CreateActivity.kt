@@ -9,18 +9,18 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.testapplication.databinding.ActivityCreateBinding
 import kotlinx.android.synthetic.main.activity_create.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 class CreateActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityCreateBinding //defining the binding class
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateBinding.inflate(layoutInflater) //initializing the binding class
         setContentView(binding.root) //contentView as binding.root
-
 
         //Event listener for the selected radio button and sends a toast message of the selected one
         category_group.setOnCheckedChangeListener(
@@ -67,6 +67,8 @@ class CreateActivity : AppCompatActivity() {
             it.putExtra("RADIO_MESSAGE", selectedRadio.text.toString())
             startActivity(it)
         }
+
+
 /*        val index = 1
         val newItem = ExerciseModel(binding.exerciseName.text.toString())
         val mainActivity = MainActivity()

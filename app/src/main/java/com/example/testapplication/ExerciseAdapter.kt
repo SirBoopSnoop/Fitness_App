@@ -14,7 +14,7 @@ class ExerciseAdapter(private val exerciseList : ArrayList<ExerciseModel>) :
     RecyclerView.Adapter<ExerciseAdapter.ExerciseViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseViewHolder {
-        //This is where you inflate the layout (Giving a look to our rows)
+        //This is where you inflate the layout. Giving a look to our rows
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.recyclerview_design, parent, false)
         return ExerciseViewHolder(itemView)
