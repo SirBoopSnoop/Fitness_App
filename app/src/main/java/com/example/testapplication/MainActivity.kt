@@ -1,5 +1,4 @@
 package com.example.testapplication
-import android.content.ClipData
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,7 +12,12 @@ import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.Group
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
+import com.google.android.youtube.player.YouTubeBaseActivity
+import com.google.android.youtube.player.YouTubeInitializationResult
+import com.google.android.youtube.player.YouTubePlayer
+import com.google.android.youtube.player.YouTubePlayerView
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
@@ -29,9 +33,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var navigationView: NavigationView
     lateinit var drawerLayout: DrawerLayout
 
+    var exerciseList = getExerciseData()
+    var adapter = ExerciseAdapter(exerciseList)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+/*        val message = intent?.getStringExtra("RADIO_MESSAGE")
+
+        val textView = findViewById<TextView>(R.id.textView2).apply {
+            text = message
+        }*/
 
         /*test_button.setOnClickListener {
 
@@ -74,8 +87,34 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         navigationView.setNavigationItemSelectedListener(this)
 
+        // Creates a vertical Layout Manager
+        exercise_RecyclerView.layoutManager = LinearLayoutManager(this)
+
+        // Access the RecyclerView Adapter and load the data into it
+        exercise_RecyclerView.adapter = adapter
+        exercise_RecyclerView.setHasFixedSize(true)
     }
 
+    private fun getExerciseData() : ArrayList<ExerciseModel> {
+        val list = ArrayList<ExerciseModel>()
+        val nameDummy = "Exercise1"
+        val nameMessage = intent?.getStringExtra("NAME_MESSAGE")
+        val exerciseModel = ExerciseModel(nameMessage)
+        list.add(ExerciseModel(nameMessage))
+/*
+        if (nameMessage != null) {
+            for(i in 0 until size) {
+                val item = ExerciseModel(nameMessage)
+                list += item
+            }
+        }
+
+        val index: Int = exerciseList.size
+        val nameMessage = intent?.getStringExtra("NAME_MESSAGE")
+        list.add(index, ExerciseModel(nameMessage))
+        adapter.notifyItemInserted(index)*/
+        return list
+    }
 
     override fun onBackPressed() {
 
