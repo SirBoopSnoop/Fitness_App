@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.testapplication.databinding.ActivityCreateBinding
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_create.*
 
 
@@ -33,33 +34,12 @@ class CreateActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT).show()
             })
 
-        val exerciseName = binding.exerciseName
-        val reps = binding.repsValue
-        val sets = binding.setsValue
-        val intensity = binding.intensityValue
-        val breakTime = binding.breakTimeValue
-/*        val radioId: Int = binding.categoryGroup.checkedRadioButtonId
-        val radioButton = findViewById<RadioButton>(radioId)*//*
-        binding.saveButton.setOnClickListener {
-            Toast.makeText(
-                applicationContext, "Following data: " + " ${exerciseName.text}\n" +
-                        "${reps.text}\n" +
-                        "${sets.text}\n" +
-                        "${intensity.text}\n" +
-                        "${breakTime.text}\n" *//*+
-                        "${radioButton.text}\n"*//*, Toast.LENGTH_LONG
-            ).show()
-        }*/
-
         // Get radio group selected status and text using button click event
         binding.saveButton.setOnClickListener {
             // Get the checked radio button id from radio group
             val id: Int = category_group.checkedRadioButtonId
             if (id != -1) { //If none of the radio button is selected
-                val selectedRadio: RadioButton = findViewById(id)
-                Toast.makeText(
-                    applicationContext, "Exercise plan created:" + "${selectedRadio.text}",
-                    Toast.LENGTH_SHORT).show()
+                createExercise()
             } else {
                 // If none of the radio button is selected
                 Toast.makeText(
@@ -69,6 +49,24 @@ class CreateActivity : AppCompatActivity() {
 
         //Makes the cancel button goes back to the main activity
         binding.cancelButton.setOnClickListener {finish()}
+    }
+
+    fun createExercise(){
+        val exerciseName = binding.exerciseName.text.toString()
+        val reps = binding.repsValue.text.toString().toInt()
+        val sets = binding.setsValue.text.toString().toInt()
+        val intensity = binding.intensityValue.text.toString().toDouble()
+        val breakTime = binding.breakTimeValue.text.toString().toInt()
+        val id = binding.categoryGroup.checkedRadioButtonId
+        val category = binding.root.findViewById<RadioButton>(id).text.toString()
+
+        val exercise = Exercise(exerciseName, null, reps, sets, null, intensity, breakTime, category, null)
+        val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/")
+            val testData = database.getReference("TestData")
+        testData.child(exerciseName).setValue(exercise).addOnSuccessListener {
+            Toast.makeText(this, "Successfully saved", Toast.LENGTH_SHORT).show()
+            finish()
+        }.addOnFailureListener { Toast.makeText(this, "Failed...", Toast.LENGTH_SHORT).show() }
     }
 
     private fun exerciseDataSender() {

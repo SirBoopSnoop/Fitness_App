@@ -30,7 +30,6 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
             database.child(path).get().addOnSuccessListener {
 
                 if(it.exists()){
-
                     val exerciseName = it.child("exerciseName").value.toString()
                     val breakTime = it.child("breakTime").value.toString()
                     val category = it.child("category").value.toString()
