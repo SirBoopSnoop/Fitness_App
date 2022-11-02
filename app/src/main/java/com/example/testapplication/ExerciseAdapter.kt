@@ -30,6 +30,7 @@ class ExerciseAdapter(private val exerciseList : ArrayList<Exercise>) :
 /*        holder.exerciseImage.setImageResource(currentItem.category)*/
 
         holder.textView1.text = currentItem.exerciseName
+        holder.textView2.text = currentItem.category
     }
 
     override fun getItemCount(): Int {
@@ -41,6 +42,7 @@ class ExerciseAdapter(private val exerciseList : ArrayList<Exercise>) :
         //Grabbing the views from our recycler_design layout file
 
         val textView1 : TextView = itemView.exercise_textView
+        val textView2 : TextView = itemView.exercise_textView2
 /*        val exerciseImage : ImageView = itemView.findViewById(R.id.exercise_image)*/
 
     }
