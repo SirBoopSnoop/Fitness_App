@@ -48,6 +48,21 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
 
 
         initializePlayer(getYoutubeVideoIdFromUrl("https://www.youtube.com/watch?v=DkWokwdxCIU")!!)
+
+        //Variables from MainActivity ViewCard Intent data
+        val exerciseData = intent
+        val exerciseName = exerciseData.getStringExtra("nameKey")
+        val reps = exerciseData.getIntExtra("repsKey", 0).toString()
+        val sets = exerciseData.getIntExtra("setsKey", 0).toString()
+        val intensity = exerciseData.getIntExtra("intensityKey", 0).toString()
+        val breakTime = exerciseData.getIntExtra("breakTimeKey", 0).toString()
+        val category = exerciseData.getStringExtra("categoryKey")
+
+        binding.exerciseNameView.text = exerciseName
+        binding.breakView.append(breakTime)
+        binding.repsView.append(reps)
+        binding.setsView.append(sets)
+
     }
 
     private fun initializePlayer(videoId : String){

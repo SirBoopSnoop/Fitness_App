@@ -1,42 +1,19 @@
 package com.example.testapplication
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_create.view.*
 import kotlinx.android.synthetic.main.recyclerview_design.view.*
 
 
-class ExerciseAdapter(private val exerciseList : ArrayList<Exercise>) : RecyclerView.Adapter<ExerciseAdapter.MyViewHolder>(){
-
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_design, parent, false)
-        return MyViewHolder(itemView)
-    }
-
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentItem = exerciseList[position]
-
-        holder.exerciseName.text = currentItem.exerciseName
-    }
-
-    override fun getItemCount(): Int {
-        return exerciseList.size
-    }
-
-    class MyViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
-        val exerciseName : TextView = itemView.findViewById(R.id.exercise_textView)
-    }
-}
-
-
-/*
-class ExerciseAdapter(private val exerciseList : ArrayList<ExerciseModel>) :
+class ExerciseAdapter(private val exerciseList: ArrayList<Exercise>,
+                      private val listener: OnItemClickListener
+) :
     RecyclerView.Adapter<ExerciseAdapter.ExerciseViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseViewHolder {
@@ -50,10 +27,11 @@ class ExerciseAdapter(private val exerciseList : ArrayList<ExerciseModel>) :
         //Assigning values to the views were created in the recycler_design layout file
         //Based on the position of the recycler view
         val currentItem = exerciseList[position]
-*/
-/*        holder.exerciseImage.setImageResource(currentItem.category)*//*
+/*        holder.exerciseImage.setImageResource(currentItem.category)*/
 
         holder.textView1.text = currentItem.exerciseName
+        holder.textView2.text = currentItem.category
+
     }
 
     override fun getItemCount(): Int {
@@ -61,12 +39,24 @@ class ExerciseAdapter(private val exerciseList : ArrayList<ExerciseModel>) :
         return exerciseList.size
     }
 
-    class ExerciseViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+    inner class ExerciseViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         //Grabbing the views from our recycler_design layout file
+        val textView1: TextView = itemView.exercise_textView
+        val textView2: TextView = itemView.exercise_textView2
+        val exerciseImage: ImageView = itemView.exercise_image
 
-        val textView1 : TextView = itemView.exercise_textView
-*/
-/*        val exerciseImage : ImageView = itemView.findViewById(R.id.exercise_image)*//*
+        init {
+            itemView.setOnClickListener(this)
+        }
 
+        override fun onClick(p0: View?) {
+            val position = bindingAdapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                listener.onItemClick(position)
+            }
+        }
     }
-}*/
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
+}
