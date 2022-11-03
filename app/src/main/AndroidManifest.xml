@@ -22,6 +22,7 @@
         android:theme="@style/Theme.TestApplication"
         tools:targetApi="31">
         <activity android:name=".CreateActivity"/>
+        <activity android:name=".EditActivity"/>
         <activity android:name=".ViewExerciseActivity"/>
         <activity
             android:name=".MainActivity"

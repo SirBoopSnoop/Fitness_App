@@ -23,4 +23,13 @@
     <string name="legs">Legs</string>
     <string name="back">Back</string>
 
+    <string-array name="category_list">
+        <item>Cardio</item>
+        <item>Arms</item>
+        <item>Chest</item>
+        <item>Abs</item>
+        <item>Legs</item>
+        <item>Back</item>
+    </string-array>
+
 </resources>

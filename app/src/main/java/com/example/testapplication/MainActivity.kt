@@ -29,12 +29,12 @@ import java.util.regex.Pattern
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     //Variables
-    lateinit var toolbar: Toolbar
-    lateinit var navigationView: NavigationView
-    lateinit var drawerLayout: DrawerLayout
-    lateinit var database : DatabaseReference
-    lateinit var exerciseList : ArrayList<Exercise>
-    lateinit var recyclerView : RecyclerView
+    private lateinit var toolbar: Toolbar
+    private lateinit var navigationView: NavigationView
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var database : DatabaseReference
+    private lateinit var exerciseList : ArrayList<Exercise>
+    private lateinit var recyclerView : RecyclerView
 
     /*var exerciseList = getExerciseData()
     var adapter = ExerciseAdapter(exerciseList)*/
@@ -77,7 +77,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         create_button.setOnClickListener {
-            Intent(this, CreateActivity::class.java).also{
+            Intent(this, EditActivity::class.java).also{
+                val value = "Hello"
+                it.putExtra("key", value)
                 startActivity(it)
             }
         }
