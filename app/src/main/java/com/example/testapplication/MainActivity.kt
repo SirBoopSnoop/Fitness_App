@@ -97,13 +97,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Toast.makeText(baseContext, "Failed to load the exercise.",
+                    Toast.LENGTH_SHORT).show()
             }
         })
     }
 
     override fun onItemClick(position: Int) {
-        Toast.makeText(this, "Item $position clicked", Toast.LENGTH_SHORT).show()
         val clickedItem : Exercise = exerciseList[position]
 
         //Sends the data intent to ViewExerciseActivity
@@ -117,7 +117,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(it)
             }
 
-/*        clickedItem.exerciseName = "clicked"*/
         recyclerView.adapter?.notifyItemChanged(position)
     }
 
