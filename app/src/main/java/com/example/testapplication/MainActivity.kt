@@ -3,30 +3,18 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.MediaController
 import android.widget.Toast
-import android.widget.VideoView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
-import androidx.constraintlayout.widget.Group
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
-import com.google.android.youtube.player.YouTubeBaseActivity
-import com.google.android.youtube.player.YouTubeInitializationResult
-import com.google.android.youtube.player.YouTubePlayer
-import com.google.android.youtube.player.YouTubePlayerView
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
-import java.util.regex.Pattern
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, ExerciseAdapter.OnItemClickListener {
 
     //Variables
     lateinit var toolbar: Toolbar
@@ -52,6 +40,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         }*/
         recyclerView = findViewById(R.id.exercise_RecyclerView)
+        // Creates a vertical Layout Manager
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
 
@@ -90,13 +79,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         navigationView.setNavigationItemSelectedListener(this)
-
-        // Creates a vertical Layout Manager
-/*        exercise_RecyclerView.layoutManager = LinearLayoutManager(this)
-
-        // Access the RecyclerView Adapter and load the data into it
-        exercise_RecyclerView.adapter = adapter
-        exercise_RecyclerView.setHasFixedSize(true)*/
     }
 
     private fun getData() {
@@ -109,7 +91,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     val exercise = exerciseSnapshot.getValue(Exercise::class.java)
                     exerciseList.add(exercise!!)
                 }
-                recyclerView.adapter = ExerciseAdapter(exerciseList)
+                // Access the RecyclerView Adapter and load the data into it
+                recyclerView.adapter = ExerciseAdapter(exerciseList, this@MainActivity)
             }
         }
 
@@ -117,6 +100,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 TODO("Not yet implemented")
             }
         })
+    }
+
+    override fun onItemClick(position: Int) {
+        Toast.makeText(this, "Item $position clicked", Toast.LENGTH_SHORT).show()
+        val clickedItem : Exercise = exerciseList[position]
+
+        //Sends the data intent to ViewExerciseActivity
+            Intent(this, ViewExerciseActivity::class.java).also{
+                it.putExtra("nameKey", clickedItem.exerciseName)
+                it.putExtra("repsKey", clickedItem.reps)
+                it.putExtra("setsKey", clickedItem.sets)
+                it.putExtra("intensityKey", clickedItem.intensity)
+                it.putExtra("breakTimeKey", clickedItem.breakTime)
+                it.putExtra("categoryKey", clickedItem.category)
+                startActivity(it)
+            }
+
+/*        clickedItem.exerciseName = "clicked"*/
+        recyclerView.adapter?.notifyItemChanged(position)
     }
 
     override fun onBackPressed() {
