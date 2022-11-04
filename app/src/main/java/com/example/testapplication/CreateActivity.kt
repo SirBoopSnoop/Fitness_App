@@ -60,7 +60,7 @@ class CreateActivity : AppCompatActivity() {
         val id = binding.categoryGroup.checkedRadioButtonId
         val category = binding.root.findViewById<RadioButton>(id).text.toString()
 
-        val exercise = Exercise(exerciseName, null, reps, sets, null, intensity, breakTime, category, null)
+        val exercise = Exercise(exerciseName, null, reps, sets, intensity, breakTime, category, null)
         val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/")
             val testData = database.getReference("TestData")
         testData.child(exerciseName).setValue(exercise).addOnSuccessListener {

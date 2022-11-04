@@ -1,5 +1,6 @@
 package com.example.testapplication
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -15,7 +16,7 @@ import kotlin.String
 class ViewExerciseActivity : YouTubeBaseActivity() {
 
     private lateinit var binding : ActivityViewexerciseBinding
-    private lateinit var exerciseName : String
+    private lateinit var path: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -24,66 +25,65 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
         val extras : Bundle? = intent.extras
         if (extras != null){
             var value : String? = extras.getString("viewKey")
-            val path = value.toString()
-            val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("TestData")
-            database.child(path).get().addOnSuccessListener {
-
-                if(it.exists()){
-                    exerciseName = it.child("exerciseName").value.toString()
-                    val breakTime = it.child("breakTime").value.toString()
-                    val description = it.child("description").value.toString()
-                    val category = it.child("category").value.toString()
-                    val intensity = it.child("intensity").value.toString()
-                    val reps = it.child("reps").value.toString()
-                    val sets = it.child("sets").value.toString()
-
-                    binding.exerciseNameView.text = exerciseName
-                    binding.breakView.append(breakTime)
-                    binding.repsView.append(reps)
-                    binding.setsView.append(sets)
-                    binding.description.text = description
-
-                }
-            }
+            path = value.toString()
+            viewData(path)
         }
 
+        initializePlayer(getYoutubeVideoIdFromUrl("https://www.youtube.com/watch?v=hUHQdQfjlSo")!!)
 
-        initializePlayer(getYoutubeVideoIdFromUrl("https://www.youtube.com/watch?v=DkWokwdxCIU")!!)
-
-        //Variables from MainActivity ViewCard Intent data
-/*        val exerciseData = intent
-        val exerciseName = exerciseData.getStringExtra("nameKey")
-        val reps = exerciseData.getIntExtra("repsKey", 0).toString()
-        val sets = exerciseData.getIntExtra("setsKey", 0).toString()
-        val intensity = exerciseData.getIntExtra("intensityKey", 0).toString()
-        val breakTime = exerciseData.getIntExtra("breakTimeKey", 0).toString()
-        val category = exerciseData.getStringExtra("categoryKey")
-        val description = exerciseData.getStringExtra("descriptionKey")
-
-        binding.exerciseNameView.text = exerciseName
-        binding.breakView.append(breakTime)
-        binding.repsView.append(reps)
-        binding.setsView.append(sets)
-        binding.description.text = description*/
 
         cancel_view_button.setOnClickListener {
             finish()
         }
 
-        edit_button.setOnClickListener {
+        binding.editButton.setOnClickListener {
             Intent(this, EditActivity::class.java).also{
-                it.putExtra("key", exerciseName)
+                it.putExtra("key", path)
                 startActivity(it)
             }
         }
 
         binding.descriptionButton.setOnClickListener {
             Intent(this, AddDescriptionActivity::class.java).also{
-                it.putExtra("descKey", exerciseName)
+                it.putExtra("descKey", path)
                 startActivity(it)
             }
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val extras : Bundle? = intent.extras
+        if (extras != null){
+            var value : String? = extras.getString("viewKey")
+            path = value.toString()
+        }
+        viewData(path)
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun viewData(path:String){
+        val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("TestData")
+        database.child(path).get().addOnSuccessListener {
+
+            if(it.exists()){
+                val exerciseName = it.child("exerciseName").value.toString()
+                val breakTime = it.child("breakTime").value.toString()
+                val description = it.child("description").value.toString()
+                val category = it.child("category").value.toString()
+                val intensity = it.child("intensity").value.toString()
+                val reps = it.child("reps").value.toString()
+                val sets = it.child("sets").value.toString()
+
+                binding.exerciseNameView.text = exerciseName
+                binding.breakView.text = "Break time: $breakTime"
+                binding.repsView.text = "Reps: $reps"
+                binding.setsView.text = "Sets: $sets"
+                binding.description.text = description
+
+            }
+        }
     }
 
     private fun initializePlayer(videoId : String){

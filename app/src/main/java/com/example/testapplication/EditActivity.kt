@@ -11,6 +11,7 @@ import com.google.firebase.database.FirebaseDatabase
 class EditActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEditBinding //defining the binding class
+    private lateinit var path : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +33,7 @@ class EditActivity : AppCompatActivity() {
         val extras : Bundle? = intent.extras
         if (extras != null) {
             var value: String? = extras.getString("key")
-            val path = value.toString()
+            path = value.toString()
             fillContents(path)
         }
 
@@ -46,6 +47,10 @@ class EditActivity : AppCompatActivity() {
     }
 
     private fun updateExercise(){
+        val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/")
+        val testData = database.getReference("TestData")
+
+        val youtubeLink = binding.youtubeLink.text.toString()
         val exerciseName = binding.exerciseName.text.toString()
         val reps = binding.repsValue.text.toString().toInt()
         val sets = binding.setsValue.text.toString().toInt()
@@ -53,13 +58,20 @@ class EditActivity : AppCompatActivity() {
         val breakTime = binding.breakTimeValue.text.toString().toInt()
         val category = binding.categoryDropdown.selectedItem.toString()
 
-        val exercise = Exercise(exerciseName, null, reps, sets, null, intensity, breakTime, category, null)
-        val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/")
-        val testData = database.getReference("TestData")
-        testData.child(exerciseName).setValue(exercise).addOnSuccessListener {
+        var description = ""
+
+/*        testData.child(path).child("description").get().addOnSuccessListener(){
+            if (it.exists()){
+                description = it.value.toString()
+            }
+        }*/
+
+        val exercise = Exercise(exerciseName, youtubeLink, reps, sets, intensity, breakTime, category, description)
+        testData.child(path).setValue(exercise).addOnSuccessListener {
             Toast.makeText(this, "Successfully updated", Toast.LENGTH_SHORT).show()
             finish()
         }.addOnFailureListener { Toast.makeText(this, "Failed...", Toast.LENGTH_SHORT).show() }
+
     }
 
     private fun fillContents(path:String){

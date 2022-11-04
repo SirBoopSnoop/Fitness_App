@@ -63,12 +63,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView.setNavigationItemSelectedListener(this)
     }
 
+    override fun onResume() {
+        super.onResume()
+        getData()
+    }
+
     private fun getData() {
         database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("TestData")
 
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
             if (snapshot.exists()){
+                exerciseList.clear()
                 for (exerciseSnapshot in snapshot.children) {
                     val exercise = exerciseSnapshot.getValue(Exercise::class.java)
                     exerciseList.add(exercise!!)
