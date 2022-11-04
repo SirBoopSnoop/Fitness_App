@@ -62,19 +62,11 @@
             android:layout_height="match_parent"
             android:layout_marginTop="58dp"
             android:layout_marginBottom="63dp"
-            app:layout_constraintBottom_toTopOf="@+id/btnPlay"
+            app:layout_constraintBottom_toTopOf="@+id/create_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btnPlay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button"
-            app:layout_constraintBottom_toTopOf="@+id/create_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/create_button"

@@ -30,15 +30,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
 
 
-        /*test_button.setOnClickListener {
-
-            val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/")
-            val testData = database.getReference("TestData")
-            testData.child("test").setValue("New test").addOnSuccessListener {
-                Toast.makeText(this, "Successfully saved", Toast.LENGTH_SHORT).show()
-            }.addOnFailureListener { Toast.makeText(this, "Failed...", Toast.LENGTH_SHORT).show() }
-
-        }*/
         recyclerView = findViewById(R.id.exercise_RecyclerView)
         // Creates a vertical Layout Manager
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -48,19 +39,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         getData()
 
 
-
-        btnPlay.setOnClickListener {
-            Intent(this, ViewExerciseActivity::class.java).also{
-                val value = "New exercise"
-                it.putExtra("key", value)
-                startActivity(it)
-            }
-        }
-
         create_button.setOnClickListener {
-            Intent(this, EditActivity::class.java).also{
-                val value = "Hello"
-                it.putExtra("key", value)
+            Intent(this, CreateActivity::class.java).also{
                 startActivity(it)
             }
         }
@@ -110,12 +90,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //Sends the data intent to ViewExerciseActivity
             Intent(this, ViewExerciseActivity::class.java).also{
-                it.putExtra("nameKey", clickedItem.exerciseName)
-                it.putExtra("repsKey", clickedItem.reps)
+                it.putExtra("viewKey", clickedItem.exerciseName)
+/*                it.putExtra("repsKey", clickedItem.reps)
                 it.putExtra("setsKey", clickedItem.sets)
                 it.putExtra("intensityKey", clickedItem.intensity)
                 it.putExtra("breakTimeKey", clickedItem.breakTime)
                 it.putExtra("categoryKey", clickedItem.category)
+                it.putExtra("descriptionKey", clickedItem.description)*/
                 startActivity(it)
             }
 

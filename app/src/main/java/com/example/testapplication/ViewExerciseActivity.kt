@@ -1,15 +1,13 @@
 package com.example.testapplication
 
+import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.widget.Toast
-import com.example.testapplication.databinding.ActivityCreateBinding
 import com.example.testapplication.databinding.ActivityViewexerciseBinding
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_viewexercise.*
 import java.util.regex.Pattern
 import kotlin.String
@@ -17,6 +15,7 @@ import kotlin.String
 class ViewExerciseActivity : YouTubeBaseActivity() {
 
     private lateinit var binding : ActivityViewexerciseBinding
+    private lateinit var exerciseName : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -24,14 +23,15 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
         setContentView(binding.root)
         val extras : Bundle? = intent.extras
         if (extras != null){
-            var value : String? = extras.getString("key")
+            var value : String? = extras.getString("viewKey")
             val path = value.toString()
             val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("TestData")
             database.child(path).get().addOnSuccessListener {
 
                 if(it.exists()){
-                    val exerciseName = it.child("exerciseName").value.toString()
+                    exerciseName = it.child("exerciseName").value.toString()
                     val breakTime = it.child("breakTime").value.toString()
+                    val description = it.child("description").value.toString()
                     val category = it.child("category").value.toString()
                     val intensity = it.child("intensity").value.toString()
                     val reps = it.child("reps").value.toString()
@@ -41,6 +41,7 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
                     binding.breakView.append(breakTime)
                     binding.repsView.append(reps)
                     binding.setsView.append(sets)
+                    binding.description.text = description
 
                 }
             }
@@ -50,18 +51,38 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
         initializePlayer(getYoutubeVideoIdFromUrl("https://www.youtube.com/watch?v=DkWokwdxCIU")!!)
 
         //Variables from MainActivity ViewCard Intent data
-        val exerciseData = intent
+/*        val exerciseData = intent
         val exerciseName = exerciseData.getStringExtra("nameKey")
         val reps = exerciseData.getIntExtra("repsKey", 0).toString()
         val sets = exerciseData.getIntExtra("setsKey", 0).toString()
         val intensity = exerciseData.getIntExtra("intensityKey", 0).toString()
         val breakTime = exerciseData.getIntExtra("breakTimeKey", 0).toString()
         val category = exerciseData.getStringExtra("categoryKey")
+        val description = exerciseData.getStringExtra("descriptionKey")
 
         binding.exerciseNameView.text = exerciseName
         binding.breakView.append(breakTime)
         binding.repsView.append(reps)
         binding.setsView.append(sets)
+        binding.description.text = description*/
+
+        cancel_view_button.setOnClickListener {
+            finish()
+        }
+
+        edit_button.setOnClickListener {
+            Intent(this, EditActivity::class.java).also{
+                it.putExtra("key", exerciseName)
+                startActivity(it)
+            }
+        }
+
+        binding.descriptionButton.setOnClickListener {
+            Intent(this, AddDescriptionActivity::class.java).also{
+                it.putExtra("descKey", exerciseName)
+                startActivity(it)
+            }
+        }
 
     }
 
