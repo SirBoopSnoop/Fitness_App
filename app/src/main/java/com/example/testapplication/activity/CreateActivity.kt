@@ -21,7 +21,6 @@ class CreateActivity : AppCompatActivity() {
         binding = ActivityCreateBinding.inflate(layoutInflater) //initializing the binding class
         setContentView(binding.root) //contentView as binding.root
 
-
         //Event listener for the selected radio button and sends a toast message of the selected one
         category_group.setOnCheckedChangeListener(
             RadioGroup.OnCheckedChangeListener { group, checkedId ->
