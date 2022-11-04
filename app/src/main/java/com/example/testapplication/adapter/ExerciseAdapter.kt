@@ -1,4 +1,4 @@
-package com.example.testapplication
+package com.example.testapplication.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.activity_create.view.*
+import com.example.testapplication.R
 import kotlinx.android.synthetic.main.recyclerview_design.view.*
+import com.example.testapplication.model.Exercise
 
 
 class ExerciseAdapter(private val exerciseList: ArrayList<Exercise>,

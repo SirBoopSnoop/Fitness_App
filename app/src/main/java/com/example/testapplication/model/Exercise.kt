@@ -1,4 +1,4 @@
-package com.example.testapplication
+package com.example.testapplication.model
 
 data class Exercise(val exerciseName : String? = null,
                     val videoUrl : String? = null,

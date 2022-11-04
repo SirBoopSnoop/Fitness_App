@@ -1,9 +1,9 @@
-package com.example.testapplication
+package com.example.testapplication.activity
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.example.testapplication.R
 import com.example.testapplication.databinding.ActivityAddDescriptionBinding
 import com.google.firebase.database.FirebaseDatabase
 

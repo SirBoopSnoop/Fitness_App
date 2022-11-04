@@ -1,12 +1,12 @@
-package com.example.testapplication
+package com.example.testapplication.activity
 
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
-import com.example.testapplication.databinding.ActivityCreateBinding
+import com.example.testapplication.R
 import com.example.testapplication.databinding.ActivityEditBinding
 import com.google.firebase.database.FirebaseDatabase
+import com.example.testapplication.model.Exercise
 
 class EditActivity : AppCompatActivity() {
 

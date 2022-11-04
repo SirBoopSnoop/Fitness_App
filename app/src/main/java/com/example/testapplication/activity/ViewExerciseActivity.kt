@@ -1,9 +1,10 @@
-package com.example.testapplication
+package com.example.testapplication.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import com.example.testapplication.YouTubeConfig
 import com.example.testapplication.databinding.ActivityViewexerciseBinding
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult

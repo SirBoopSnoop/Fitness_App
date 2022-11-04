@@ -1,4 +1,4 @@
-package com.example.testapplication
+package com.example.testapplication.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,11 +10,15 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.testapplication.adapter.ExerciseAdapter
+import com.example.testapplication.R
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
+import com.example.testapplication.model.Exercise
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, ExerciseAdapter.OnItemClickListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+    ExerciseAdapter.OnItemClickListener {
 
     //Variables
     private lateinit var toolbar: Toolbar
@@ -56,7 +60,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         /*-------------------------Navigation Drawer Menu--------------------------*/
         navigationView.bringToFront()
-        val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 

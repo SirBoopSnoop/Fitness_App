@@ -22,13 +22,13 @@
         android:theme="@style/Theme.TestApplication"
         tools:targetApi="31">
         <activity
-            android:name=".AddDescriptionActivity"
+            android:name=".activity.AddDescriptionActivity"
             android:exported="false" />
-        <activity android:name=".CreateActivity" />
-        <activity android:name=".EditActivity" />
-        <activity android:name=".ViewExerciseActivity"/>
+        <activity android:name=".activity.CreateActivity" />
+        <activity android:name=".activity.EditActivity" />
+        <activity android:name=".activity.ViewExerciseActivity"/>
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
