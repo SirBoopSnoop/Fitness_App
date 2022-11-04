@@ -1,18 +1,15 @@
-package com.example.testapplication
+package com.example.testapplication.activity
 
 import android.content.Intent
-import android.content.IntentSender
 import android.os.Bundle
-import android.view.View
-import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.testapplication.databinding.ActivityCreateBinding
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_create.*
+import com.example.testapplication.model.Exercise
 
 
 class CreateActivity : AppCompatActivity() {
@@ -51,7 +48,7 @@ class CreateActivity : AppCompatActivity() {
         binding.cancelButton.setOnClickListener {finish()}
     }
 
-    fun createExercise(){
+    private fun createExercise(){
         val exerciseName = binding.exerciseName.text.toString()
         val reps = binding.repsValue.text.toString().toInt()
         val sets = binding.setsValue.text.toString().toInt()
