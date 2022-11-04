@@ -51,6 +51,18 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
             }
         }
 
+        binding.deleteViewButton.setOnClickListener {
+            deleteExercise()
+        }
+
+    }
+
+    private fun deleteExercise() {
+        val databaseRef = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("TestData")
+        databaseRef.child(path).removeValue().addOnSuccessListener {
+            Toast.makeText(this, "Exercise data deleted", Toast.LENGTH_LONG).show()
+            finish()
+        }
     }
 
     override fun onResume() {

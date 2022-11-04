@@ -2,4 +2,5 @@
 <resources>
     <item name="textViewReceiver" type="id" />
     <item name="exercise_textView2" type="id" />
+    <item name="youtubePlay" type="id" />
 </resources>

@@ -72,14 +72,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Duration: "
-                        android:textSize="20dp"/>
+                        android:textSize="20dp" />
 
                     <TextView
                         android:id="@+id/breakView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Break time: "
-                        android:textSize="20dp"/>
+                        android:textSize="20dp" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -103,7 +103,7 @@
                 android:id="@+id/description_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Change description"/>
+                android:text="Change description" />
 
         </LinearLayout>
     </ScrollView>
@@ -122,7 +122,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5"/>
+        app:layout_constraintGuide_percent="0.5" />
 
     <Button
         android:id="@+id/cancel_view_button"
@@ -130,7 +130,16 @@
         android:layout_height="wrap_content"
         android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3" />
+
+    <Button
+        android:id="@+id/delete_view_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/cancel_view_button"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
 
