@@ -22,11 +22,13 @@
         android:theme="@style/Theme.TestApplication"
         tools:targetApi="31">
         <activity
+            android:name=".activity.TimerActivity" />
+        <activity
             android:name=".activity.AddDescriptionActivity"
             android:exported="false" />
         <activity android:name=".activity.CreateActivity" />
         <activity android:name=".activity.EditActivity" />
-        <activity android:name=".activity.ViewExerciseActivity"/>
+        <activity android:name=".activity.ViewExerciseActivity" />
         <activity
             android:name=".activity.MainActivity"
             android:exported="true"

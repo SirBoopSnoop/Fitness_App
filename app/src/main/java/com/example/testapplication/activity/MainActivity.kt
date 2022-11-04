@@ -103,13 +103,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //Sends the data intent to ViewExerciseActivity
             Intent(this, ViewExerciseActivity::class.java).also{
-                it.putExtra("viewKey", clickedItem.exerciseName)
-/*                it.putExtra("repsKey", clickedItem.reps)
-                it.putExtra("setsKey", clickedItem.sets)
-                it.putExtra("intensityKey", clickedItem.intensity)
-                it.putExtra("breakTimeKey", clickedItem.breakTime)
-                it.putExtra("categoryKey", clickedItem.category)
-                it.putExtra("descriptionKey", clickedItem.description)*/
+                it.putExtra("viewKey", clickedItem.exerciseId)
                 startActivity(it)
             }
 

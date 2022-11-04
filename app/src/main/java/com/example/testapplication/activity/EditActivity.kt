@@ -66,7 +66,7 @@ class EditActivity : AppCompatActivity() {
             }
         }*/
 
-        val exercise = Exercise(exerciseName, youtubeLink, reps, sets, intensity, breakTime, category, description)
+        val exercise = Exercise(path, exerciseName, youtubeLink, reps, sets, intensity, breakTime, category, description)
         testData.child(path).setValue(exercise).addOnSuccessListener {
             Toast.makeText(this, "Successfully updated", Toast.LENGTH_SHORT).show()
             finish()
