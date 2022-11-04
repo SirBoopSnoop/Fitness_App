@@ -55,6 +55,13 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
             deleteExercise()
         }
 
+        binding.startButton.setOnClickListener {
+            Intent(this, TimerActivity::class.java).also{
+                it.putExtra("timerKey", path)
+                startActivity(it)
+            }
+        }
+
     }
 
     private fun deleteExercise() {

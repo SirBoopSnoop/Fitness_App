@@ -59,7 +59,7 @@ class CreateActivity : AppCompatActivity() {
 
         val exercise = Exercise(exerciseName, exerciseName,null, reps, sets, intensity, breakTime, category, null)
         val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/")
-            val testData = database.getReference("TestData")
+        val testData = database.getReference("TestData")
         testData.child(exerciseName).setValue(exercise).addOnSuccessListener {
             Toast.makeText(this, "Successfully saved", Toast.LENGTH_SHORT).show()
             finish()

@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
         create_button.setOnClickListener {
-            Intent(this, CreateActivity::class.java).also{
+            Intent(this, TimerActivity::class.java).also{
                 startActivity(it)
             }
         }
