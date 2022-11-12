@@ -104,6 +104,7 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
                 binding.repsView.text = "Reps: $reps"
                 binding.setsView.text = "Sets: $sets"
                 binding.description.text = description
+                binding.intensityView.text = "Intensity: $intensity"
 
             }
         }

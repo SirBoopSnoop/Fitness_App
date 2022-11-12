@@ -68,10 +68,10 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/durationView"
+                        android:id="@+id/intensityView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Duration: "
+                        android:text="Intensity: "
                         android:textSize="20dp" />
 
                     <TextView
