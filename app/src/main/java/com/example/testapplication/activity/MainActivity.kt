@@ -1,10 +1,13 @@
 package com.example.testapplication.activity
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -16,6 +19,9 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
 import com.example.testapplication.model.Exercise
+import kotlinx.android.synthetic.main.activity_edit.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     ExerciseAdapter.OnItemClickListener {
@@ -26,6 +32,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var database : DatabaseReference
     private lateinit var exerciseList : ArrayList<Exercise>
+    //Using the temp ArrayList for filtering the exerciseList
+    private lateinit var tempArrayList : ArrayList<Exercise>
     private lateinit var recyclerView : RecyclerView
 
 
@@ -40,11 +48,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         recyclerView.setHasFixedSize(true)
 
         exerciseList = arrayListOf<Exercise>()
+        tempArrayList = arrayListOf<Exercise>()
         getData()
 
 
         create_button.setOnClickListener {
-            Intent(this, TimerActivity::class.java).also{
+            Intent(this, CreateActivity::class.java).also{
                 startActivity(it)
             }
         }
@@ -70,6 +79,40 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView.setNavigationItemSelectedListener(this)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.search, menu)
+        //Finding the search.xml from SearchView as Id
+        val item = menu!!.findItem(R.id.searchView)
+        val searchView = item!!.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            //It'll just disable the press button
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+            @SuppressLint("NotifyDataSetChanged")
+            //Whenever an user type something the function will listen to each letter
+            override fun onQueryTextChange(newText: String?): Boolean {
+                tempArrayList.clear()
+                //Makes the text letter user types into lower case in order to remove case sensitive
+                val searchText = newText!!.lowercase(Locale.getDefault())
+                if (searchText.isNotEmpty()) {
+                    exerciseList.forEach {
+                        if (it.exerciseName!!.lowercase(Locale.getDefault()).contains(searchText)) {
+                            tempArrayList.add(it)
+                        }
+                    }
+                    exercise_RecyclerView.adapter!!.notifyDataSetChanged()
+                } else {
+                    tempArrayList.clear()
+                    tempArrayList.addAll(exerciseList)
+                    exercise_RecyclerView.adapter!!.notifyDataSetChanged()
+                }
+                return false
+            }
+        })
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onResume() {
         super.onResume()
         getData()
@@ -86,8 +129,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     val exercise = exerciseSnapshot.getValue(Exercise::class.java)
                     exerciseList.add(exercise!!)
                 }
+                tempArrayList.clear()
+                tempArrayList.addAll(exerciseList)
                 // Access the RecyclerView Adapter and load the data into it
-                recyclerView.adapter = ExerciseAdapter(exerciseList, this@MainActivity)
+                recyclerView.adapter = ExerciseAdapter(tempArrayList, this@MainActivity)
             }
         }
 
@@ -96,7 +141,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     Toast.LENGTH_SHORT).show()
             }
         })
+
+        //Add all data into tempArrayList for search query
+        tempArrayList.addAll(exerciseList)
     }
+
 
     override fun onItemClick(position: Int) {
         val clickedItem : Exercise = exerciseList[position]
@@ -121,12 +170,59 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onBackPressed()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-
-        when(item.itemId){
-            //R.id.nav_cardio -> Intent(this, CardioView::class.java).also { startActivity(it) }
+        tempArrayList.clear()
+        when (item.itemId) {
+            R.id.nav_cardio -> Intent(this, MainActivity::class.java).also { _ ->
+                exerciseList.forEach {
+                    if (it.category!!.contains("Cardio")) {
+                        tempArrayList.add(it)
+                    }
+                }
+                exercise_RecyclerView.adapter!!.notifyDataSetChanged()
+            }
+            R.id.nav_arms -> Intent(this, MainActivity::class.java).also { _ ->
+                exerciseList.forEach {
+                    if (it.category!!.contains("Arms")) {
+                        tempArrayList.add(it)
+                    }
+                }
+                exercise_RecyclerView.adapter!!.notifyDataSetChanged()
+            }
+            R.id.nav_chest -> Intent(this, MainActivity::class.java).also { _ ->
+                exerciseList.forEach {
+                    if (it.category!!.contains("Chest")) {
+                        tempArrayList.add(it)
+                    }
+                }
+                exercise_RecyclerView.adapter!!.notifyDataSetChanged()
+            }
+            R.id.nav_abs -> Intent(this, MainActivity::class.java).also { _ ->
+                exerciseList.forEach {
+                    if (it.category!!.contains("Abs")) {
+                        tempArrayList.add(it)
+                    }
+                }
+                exercise_RecyclerView.adapter!!.notifyDataSetChanged()
+            }
+            R.id.nav_legs -> Intent(this, MainActivity::class.java).also { _ ->
+                exerciseList.forEach {
+                    if (it.category!!.contains("Legs")) {
+                        tempArrayList.add(it)
+                    }
+                }
+                exercise_RecyclerView.adapter!!.notifyDataSetChanged()
+            }
+            R.id.nav_back -> Intent(this, MainActivity::class.java).also { _ ->
+                exerciseList.forEach {
+                    if (it.category!!.contains("Back")) {
+                        tempArrayList.add(it)
+                    }
+                }
+                exercise_RecyclerView.adapter!!.notifyDataSetChanged()
+            }
         }
         return true
     }
-
 }
