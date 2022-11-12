@@ -174,6 +174,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         tempArrayList.clear()
         when (item.itemId) {
+            R.id.nav_list -> Intent(this, MainActivity::class.java).also {
+                startActivity(it)
+            }
+
             R.id.nav_cardio -> Intent(this, MainActivity::class.java).also { _ ->
                 exerciseList.forEach {
                     if (it.category!!.contains("Cardio")) {
@@ -182,6 +186,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
                 exercise_RecyclerView.adapter!!.notifyDataSetChanged()
             }
+
             R.id.nav_arms -> Intent(this, MainActivity::class.java).also { _ ->
                 exerciseList.forEach {
                     if (it.category!!.contains("Arms")) {
@@ -190,6 +195,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
                 exercise_RecyclerView.adapter!!.notifyDataSetChanged()
             }
+
             R.id.nav_chest -> Intent(this, MainActivity::class.java).also { _ ->
                 exerciseList.forEach {
                     if (it.category!!.contains("Chest")) {
@@ -198,6 +204,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
                 exercise_RecyclerView.adapter!!.notifyDataSetChanged()
             }
+
             R.id.nav_abs -> Intent(this, MainActivity::class.java).also { _ ->
                 exerciseList.forEach {
                     if (it.category!!.contains("Abs")) {
@@ -206,6 +213,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
                 exercise_RecyclerView.adapter!!.notifyDataSetChanged()
             }
+
             R.id.nav_legs -> Intent(this, MainActivity::class.java).also { _ ->
                 exerciseList.forEach {
                     if (it.category!!.contains("Legs")) {
@@ -214,6 +222,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
                 exercise_RecyclerView.adapter!!.notifyDataSetChanged()
             }
+
             R.id.nav_back -> Intent(this, MainActivity::class.java).also { _ ->
                 exerciseList.forEach {
                     if (it.category!!.contains("Back")) {

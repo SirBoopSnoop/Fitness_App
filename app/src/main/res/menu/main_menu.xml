@@ -4,6 +4,11 @@
     <group android:checkableBehavior="single">
 
         <item
+            android:id="@+id/nav_list"
+            android:title="All exercise"
+            android:icon="@drawable/list_icon"/>
+
+        <item
             android:id="@+id/nav_cardio"
             android:title="Cardio"
             android:icon="@drawable/cardio_icon"/>
