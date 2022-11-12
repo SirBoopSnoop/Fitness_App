@@ -78,23 +78,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView.setNavigationItemSelectedListener(this)
     }
 
-/*    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id: Int = item.itemId
-        if (id == R.id.searchView) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item)
-    }*/
-
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.search, menu)
         //Finding the search.xml from SearchView as Id
         val item = menu!!.findItem(R.id.searchView)
         val searchView = item!!.actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            //It'll just disable the press button
             override fun onQueryTextSubmit(query: String?): Boolean {
-                TODO("Not yet implemented")
+                return false
             }
             @SuppressLint("NotifyDataSetChanged")
             //Whenever an user type something the function will listen to each letter
@@ -117,7 +109,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 return false
             }
         })
-
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -137,9 +128,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     val exercise = exerciseSnapshot.getValue(Exercise::class.java)
                     exerciseList.add(exercise!!)
                 }
-                // Access the RecyclerView Adapter and load the data into it
                 tempArrayList.clear()
                 tempArrayList.addAll(exerciseList)
+                // Access the RecyclerView Adapter and load the data into it
                 recyclerView.adapter = ExerciseAdapter(tempArrayList, this@MainActivity)
             }
         }
