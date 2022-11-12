@@ -19,6 +19,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
 import com.example.testapplication.model.Exercise
+import kotlinx.android.synthetic.main.activity_edit.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -169,12 +170,57 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onBackPressed()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-
-        when(item.itemId){
-//            R.id.nav_cardio -> Intent(this, CardioView::class.java).also { startActivity(it) }
-            R.id.nav_cardio -> Intent(this, MainActivity::class.java).also {
-                startActivity(it)
+        tempArrayList.clear()
+        when (item.itemId) {
+            R.id.nav_cardio -> Intent(this, MainActivity::class.java).also { _ ->
+                exerciseList.forEach {
+                    if (it.category!!.contains("Cardio")) {
+                        tempArrayList.add(it)
+                    }
+                }
+                exercise_RecyclerView.adapter!!.notifyDataSetChanged()
+            }
+            R.id.nav_arms -> Intent(this, MainActivity::class.java).also { _ ->
+                exerciseList.forEach {
+                    if (it.category!!.contains("Arms")) {
+                        tempArrayList.add(it)
+                    }
+                }
+                exercise_RecyclerView.adapter!!.notifyDataSetChanged()
+            }
+            R.id.nav_chest -> Intent(this, MainActivity::class.java).also { _ ->
+                exerciseList.forEach {
+                    if (it.category!!.contains("Chest")) {
+                        tempArrayList.add(it)
+                    }
+                }
+                exercise_RecyclerView.adapter!!.notifyDataSetChanged()
+            }
+            R.id.nav_abs -> Intent(this, MainActivity::class.java).also { _ ->
+                exerciseList.forEach {
+                    if (it.category!!.contains("Abs")) {
+                        tempArrayList.add(it)
+                    }
+                }
+                exercise_RecyclerView.adapter!!.notifyDataSetChanged()
+            }
+            R.id.nav_legs -> Intent(this, MainActivity::class.java).also { _ ->
+                exerciseList.forEach {
+                    if (it.category!!.contains("Legs")) {
+                        tempArrayList.add(it)
+                    }
+                }
+                exercise_RecyclerView.adapter!!.notifyDataSetChanged()
+            }
+            R.id.nav_back -> Intent(this, MainActivity::class.java).also { _ ->
+                exerciseList.forEach {
+                    if (it.category!!.contains("Back")) {
+                        tempArrayList.add(it)
+                    }
+                }
+                exercise_RecyclerView.adapter!!.notifyDataSetChanged()
             }
         }
         return true
