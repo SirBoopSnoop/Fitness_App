@@ -138,6 +138,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     exerciseList.add(exercise!!)
                 }
                 // Access the RecyclerView Adapter and load the data into it
+                tempArrayList.clear()
                 tempArrayList.addAll(exerciseList)
                 recyclerView.adapter = ExerciseAdapter(tempArrayList, this@MainActivity)
             }
