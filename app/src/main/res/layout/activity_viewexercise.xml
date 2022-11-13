@@ -102,6 +102,14 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/errorView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Error"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"/>
+
             <com.google.android.youtube.player.YouTubePlayerView
                 android:id="@+id/youtubePlay"
                 android:layout_width="match_parent"
