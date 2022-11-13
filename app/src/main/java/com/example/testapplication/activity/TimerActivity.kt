@@ -87,6 +87,18 @@ class TimerActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        switch = false
+        setData(path)
+        setCounter = 1
+        counter = 0
+        timerText.text = ""
+        countdown.text = ""
+        message.text = ""
+        timer.cancel()
+    }
+
 
     @SuppressLint("SetTextI18n")
     private fun setData(path:String){
