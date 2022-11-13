@@ -188,9 +188,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
         when (item.itemId) {
-            R.id.nav_list -> Intent(this, MainActivity::class.java).also {
-                startActivity(it)
-            }
+            R.id.nav_list -> getData()
 
             R.id.nav_cardio -> exerciseListIteration("Cardio")
 
