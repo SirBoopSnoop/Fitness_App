@@ -34,8 +34,7 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
             viewData(path)
         }
 
-        //initializePlayer(getYoutubeVideoIdFromUrl("https://www.youtube.com/watch?v=hUHQdQfjlSo")!!)
-
+/*        initializePlayer(getYoutubeVideoIdFromUrl("https://www.youtube.com/watch?v=DkWokwdxCIU")!!)*/
 
         cancel_view_button.setOnClickListener {
             finish()
