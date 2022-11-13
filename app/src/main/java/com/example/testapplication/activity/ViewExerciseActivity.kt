@@ -68,7 +68,6 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
                 .show()
         }
 
-
         binding.startButton.setOnClickListener {
             Intent(this, TimerActivity::class.java).also{
                 it.putExtra("timerKey", path)
