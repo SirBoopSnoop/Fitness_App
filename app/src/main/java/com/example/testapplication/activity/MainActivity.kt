@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 tempArrayList.clear()
                 //Makes the text letter user types into lower case in order to remove case sensitive
                 val searchText = newText!!.lowercase(Locale.getDefault())
-                if (searchText.isNotEmpty()) {
+                if (searchText.isNotEmpty() && exerciseList.isNotEmpty()) {
                     exerciseList.forEach {
                         if (it.exerciseName!!.lowercase(Locale.getDefault()).contains(searchText)) {
                             tempArrayList.add(it)
@@ -105,7 +105,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 } else {
                     tempArrayList.clear()
                     tempArrayList.addAll(exerciseList)
-                    exercise_RecyclerView.adapter!!.notifyDataSetChanged()
+                    if(exerciseList.isNotEmpty()) {
+                        exercise_RecyclerView.adapter!!.notifyDataSetChanged()
+                    }
                 }
                 return false
             }
