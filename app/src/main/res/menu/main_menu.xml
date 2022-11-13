@@ -16,7 +16,7 @@
         <item
             android:id="@+id/nav_arms"
             android:title="Arms"
-            android:icon="@drawable/arm_icon"/>
+            android:icon="@drawable/arms_icon"/>
 
         <item
             android:id="@+id/nav_chest"
@@ -31,7 +31,7 @@
         <item
             android:id="@+id/nav_legs"
             android:title="Legs"
-            android:icon="@drawable/leg_icon"/>
+            android:icon="@drawable/legs_icon"/>
 
         <item
             android:id="@+id/nav_back"

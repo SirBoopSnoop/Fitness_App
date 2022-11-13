@@ -42,7 +42,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2px"
+                    android:layout_height="3px"
                     android:background="?android:attr/listDivider" />
             </LinearLayout>
 
@@ -102,6 +102,26 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/errorView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Error"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3px"
+                    android:background="?android:attr/listDivider" />
+            </LinearLayout>
+
             <com.google.android.youtube.player.YouTubePlayerView
                 android:id="@+id/youtubePlay"
                 android:layout_width="match_parent"
@@ -113,7 +133,7 @@
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:hint="Description..."
                 android:textSize="16dp" />
 

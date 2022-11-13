@@ -1,5 +1,6 @@
 package com.example.testapplication.adapter
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,8 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testapplication.R
-import kotlinx.android.synthetic.main.recyclerview_design.view.*
 import com.example.testapplication.model.Exercise
+import kotlinx.android.synthetic.main.recyclerview_design.view.*
 
 
 class ExerciseAdapter(private val exerciseList: ArrayList<Exercise>,
@@ -31,6 +32,10 @@ class ExerciseAdapter(private val exerciseList: ArrayList<Exercise>,
 
         holder.textView1.text = currentItem.exerciseName
         holder.textView2.text = currentItem.category
+        var cat = currentItem.category.toString().lowercase() + "_icon"
+        val imgUri =
+            Uri.parse("android.resource://com.example.testapplication/drawable/$cat")
+        holder.exerciseImage.setImageURI(imgUri)
 
     }
 

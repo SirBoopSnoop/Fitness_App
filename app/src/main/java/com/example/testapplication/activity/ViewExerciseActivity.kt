@@ -3,6 +3,7 @@ package com.example.testapplication.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.example.testapplication.YouTubeConfig
 import com.example.testapplication.databinding.ActivityViewexerciseBinding
@@ -112,7 +113,7 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
 
     private fun initializePlayer(videoId : String){
         val config = YouTubeConfig()
-        youtubePlay.initialize(config.API_KEY,object :  YouTubePlayer.OnInitializedListener{
+        youtubePlay.initialize(config.API_KEY,object : YouTubePlayer.OnInitializedListener{
             override fun onInitializationSuccess(
                 p0: YouTubePlayer.Provider?,
                 p1: YouTubePlayer?,
@@ -127,6 +128,9 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
                 p1: YouTubeInitializationResult?
             ) {
                 Toast.makeText(applicationContext, "Failed to initialize player", Toast.LENGTH_LONG).show()
+                youtubePlay.visibility = View.GONE
+                errorView.visibility = View.VISIBLE
+                errorView.text = "There was an issue initializing the Youtube player. Reason: $p1"
             }
         })
     }
