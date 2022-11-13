@@ -63,7 +63,6 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
                     showSnackBar("Exercise has not been deleted.")
                 }
                 .setPositiveButton("Yes") {dialog, which ->
-                    showSnackBar("Exercise has been deleted.")
                     deleteExercise()
                 }
                 .show()
@@ -82,7 +81,7 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
     private fun deleteExercise() {
         val databaseRef = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("TestData")
         databaseRef.child(path).removeValue().addOnSuccessListener {
-            Toast.makeText(this, "Exercise data has been deleted", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Exercise has been deleted", Toast.LENGTH_LONG).show()
 
             val intent = Intent(this, MainActivity::class.java)
             finish()
