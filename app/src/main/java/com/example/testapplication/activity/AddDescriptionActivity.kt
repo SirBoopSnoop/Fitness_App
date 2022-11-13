@@ -26,9 +26,13 @@ class AddDescriptionActivity : AppCompatActivity() {
             database.child(path).get().addOnSuccessListener {
 
                 if(it.exists()){
-                    val description = it.child("description").value.toString()
+                    val description = it.child("description").value
 
-                    binding.editDescription.setText(description)
+                    if (description != null){
+                        binding.editDescription.setText(description.toString())
+                    }else{
+                        binding.editDescription.setText("")
+                    }
                 }
             }
         }
