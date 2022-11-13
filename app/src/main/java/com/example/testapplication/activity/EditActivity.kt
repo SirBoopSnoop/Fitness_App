@@ -85,7 +85,9 @@ class EditActivity : AppCompatActivity() {
                 val intensity = it.child("intensity").value.toString()
                 val reps = it.child("reps").value.toString()
                 val sets = it.child("sets").value.toString()
+                val video = it.child("videoUrl").value.toString()
 
+                binding.youtubeLink.setText(video, TextView.BufferType.EDITABLE)
                 binding.exerciseName.setText(exerciseName, TextView.BufferType.EDITABLE)
                 binding.breakTimeValue.setText(breakTime, TextView.BufferType.EDITABLE)
                 binding.repsValue.setText(reps, TextView.BufferType.EDITABLE)

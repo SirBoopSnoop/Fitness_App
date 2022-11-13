@@ -34,7 +34,7 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
             viewData(path)
         }
 
-        initializePlayer(getYoutubeVideoIdFromUrl("https://www.youtube.com/watch?v=hUHQdQfjlSo")!!)
+        //initializePlayer(getYoutubeVideoIdFromUrl("https://www.youtube.com/watch?v=hUHQdQfjlSo")!!)
 
 
         cancel_view_button.setOnClickListener {
@@ -112,6 +112,7 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
                 val intensity = it.child("intensity").value.toString()
                 val reps = it.child("reps").value.toString()
                 val sets = it.child("sets").value.toString()
+                val video = it.child("videoUrl").value
 
                 binding.exerciseNameView.text = exerciseName
                 binding.breakView.text = "Break time: $breakTime"
@@ -119,6 +120,13 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
                 binding.setsView.text = "Sets: $sets"
                 binding.description.text = description
                 binding.intensityView.text = "Intensity: $intensity"
+
+                if (video != null){
+                getYoutubeVideoIdFromUrl(video.toString())?.let { it1 -> initializePlayer(it1) }
+                }else{
+                    youtubePlay.visibility = View.GONE
+                    errorView.visibility = View.VISIBLE
+                    errorView.text = "No video has been added for this exercise"}
 
             }
         }
