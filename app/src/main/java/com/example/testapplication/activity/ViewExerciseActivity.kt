@@ -1,12 +1,15 @@
 package com.example.testapplication.activity
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.example.testapplication.YouTubeConfig
 import com.example.testapplication.databinding.ActivityViewexerciseBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
@@ -16,7 +19,6 @@ import java.util.regex.Pattern
 import kotlin.String
 
 class ViewExerciseActivity : YouTubeBaseActivity() {
-
     private lateinit var binding : ActivityViewexerciseBinding
     private lateinit var path: String
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +26,7 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
 
         binding = ActivityViewexerciseBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         val extras : Bundle? = intent.extras
         if (extras != null){
             var value : String? = extras.getString("viewKey")
@@ -52,9 +55,20 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
             }
         }
 
-        binding.deleteViewButton.setOnClickListener {
-            deleteExercise()
+        binding.deleteViewButton.setOnClickListener  {
+            MaterialAlertDialogBuilder(this)
+                .setTitle("Delete exercise")
+                .setMessage("Are you sure you want to delete this exercise")
+                .setNegativeButton("Cancel") {dialog, which ->
+                    showSnackBar("Exercise has not been deleted.")
+                }
+                .setPositiveButton("Yes") {dialog, which ->
+                    showSnackBar("Exercise has been deleted.")
+                    deleteExercise()
+                }
+                .show()
         }
+
 
         binding.startButton.setOnClickListener {
             Intent(this, TimerActivity::class.java).also{
@@ -68,7 +82,7 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
     private fun deleteExercise() {
         val databaseRef = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("TestData")
         databaseRef.child(path).removeValue().addOnSuccessListener {
-            Toast.makeText(this, "Exercise data deleted", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Exercise data has been deleted", Toast.LENGTH_LONG).show()
 
             val intent = Intent(this, MainActivity::class.java)
             finish()
@@ -146,5 +160,9 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
         return if (matcher.find()){
             matcher.group()
         }else null
+    }
+
+    private fun showSnackBar(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 }
