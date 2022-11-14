@@ -4,14 +4,15 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="reps">reps</string>
+    <string name="reps">Reps</string>
     <string name="add_video">Add video</string>
     <string name="sets">Sets</string>
     <string name="intensity">Intensity</string>
     <string name="break_time">Break time</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
-
+    <string name="intensity_description">Define how quickly you want to perform the reps in a set. For instance, a value of "1" will set the pace to one rep every second. A value of 0.5 will set the pace to 2 reps per second, and a value of 2 will set the pace to 1 rep every 2 seconds, etc.</string>
+    <string name="break_description">Define how many seconds you want to wait before starting a new set</string>
     <string name="exercise_name">Exercise Name</string>
     <string name="add">+</string>
 
@@ -22,6 +23,7 @@
     <string name="abs">Abs</string>
     <string name="legs">Legs</string>
     <string name="back">Back</string>
+    <string name="youtube_video_link">Youtube video link</string>
 
     <string-array name="category_list">
         <item>Cardio</item>

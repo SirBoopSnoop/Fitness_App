@@ -1,12 +1,20 @@
 package com.example.testapplication.activity
 
+import android.content.Context
+import android.graphics.Rect
 import android.os.Bundle
+import android.text.TextUtils
+import android.view.MotionEvent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testapplication.R
 import com.example.testapplication.databinding.ActivityEditBinding
 import com.google.firebase.database.FirebaseDatabase
 import com.example.testapplication.model.Exercise
+import kotlinx.android.synthetic.main.activity_create.*
 
 class EditActivity : AppCompatActivity() {
 
@@ -38,7 +46,55 @@ class EditActivity : AppCompatActivity() {
         }
 
         binding.saveButton.setOnClickListener {
-            updateExercise()
+            // Get the checked radio button id from radio group
+            val category = categoryDropdown.selectedItem
+            if (category == null) { // If none of the options are selected
+                Toast.makeText(applicationContext, "Please select a category", Toast.LENGTH_SHORT).show()
+            }
+            //Make sure input values are reasonable
+            else if (TextUtils.isEmpty(binding.exerciseName.text)){
+                binding.exerciseName.error = "This field is required"
+            }else if (TextUtils.isEmpty(binding.repsValue.text)){
+                binding.repsValue.error = "This field is required"
+            }else if(binding.repsValue.text.toString().toInt() < 1){
+                binding.repsValue.error = "Cannot be zero"
+            }else if (TextUtils.isEmpty(binding.setsValue.text)){
+                binding.setsValue.error = "This field is required"
+            }else if(binding.setsValue.text.toString().toInt() < 1){
+                binding.setsValue.error = "Cannot be zero"
+            }else if (TextUtils.isEmpty(binding.intensityValue.text)){
+                binding.intensityValue.error = "This field is required"
+            }else if(binding.intensityValue.text.toString().toDouble() < 0.2){
+                binding.intensityValue.error = "Cannot be less than 0.2"
+            }else if (TextUtils.isEmpty(binding.breakTimeValue.text)){
+                binding.breakTimeValue.error = "This field is required"
+            }else if(binding.breakTimeValue.text.toString().toInt() < 1){
+                binding.breakTimeValue.error = "Cannot be zero"
+            }else {
+                updateExercise()
+            }
+        }
+
+        binding.intensityQuestion.setOnClickListener {
+            val dialog = AlertDialog.Builder(this)
+            dialog.setCancelable(true)
+            //dialog.setTitle("What is intensity?")
+            dialog.setMessage(getString(R.string.intensity_description))
+            dialog.setNeutralButton("Dismiss"){dialogInterface , which ->
+                dialogInterface.cancel()
+            }
+            dialog.show()
+        }
+
+        binding.breakQuestion.setOnClickListener {
+            val dialog = AlertDialog.Builder(this)
+            dialog.setCancelable(true)
+            //dialog.setTitle("Break time")
+            dialog.setMessage("Define how many seconds you want to wait before starting a new set")
+            dialog.setNeutralButton("Dismiss"){dialogInterface , which ->
+                dialogInterface.cancel()
+            }
+            dialog.show()
         }
 
         binding.cancelButton.setOnClickListener {
@@ -110,6 +166,23 @@ class EditActivity : AppCompatActivity() {
 
             }
         }
+    }
+
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            val v: View? = currentFocus
+            if (v is EditText) {
+                val outRect = Rect()
+                v.getGlobalVisibleRect(outRect)
+                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                    v.clearFocus()
+                    val imm =
+                        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0)
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event)
     }
 
 }

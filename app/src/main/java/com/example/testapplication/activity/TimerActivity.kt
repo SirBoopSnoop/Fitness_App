@@ -96,7 +96,10 @@ class TimerActivity : AppCompatActivity() {
         timerText.text = ""
         countdown.text = ""
         message.text = ""
-        timer.cancel()
+        if (switch){
+            timer.cancel()
+        }
+
     }
 
 
