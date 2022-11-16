@@ -76,7 +76,8 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
     }
 
     private fun deleteExercise() {
-        val databaseRef = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("TestData")
+        val databaseRef = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/")
+            .getReference("TestData")
         databaseRef.child(exercisePath).removeValue().addOnSuccessListener {
             Toast.makeText(this, "Exercise has been deleted", Toast.LENGTH_LONG).show()
 

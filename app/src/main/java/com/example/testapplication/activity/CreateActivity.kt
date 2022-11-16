@@ -18,6 +18,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_create.*
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.ktx.childEvents
 
 
 class CreateActivity : AppCompatActivity() {
@@ -42,9 +43,9 @@ class CreateActivity : AppCompatActivity() {
         }
 
 
-        // Get radio group selected status and text using button click event
+        // Get spinner group selected status
         binding.saveButton.setOnClickListener {
-            // Get the checked radio button id from radio group
+            // Get the checked spinner id from radio group
             val category = categoryDropdown.selectedItem
             if (category == null) { // If none of the options are selected
                 Toast.makeText(applicationContext, "Please select a category", Toast.LENGTH_SHORT).show()
@@ -108,7 +109,7 @@ class CreateActivity : AppCompatActivity() {
         val category = binding.categoryDropdown.selectedItem.toString()
         val videoUrl = binding.youtubeLink.text.toString()
 
-        val exercise = Exercise(exerciseName, exerciseName,videoUrl, reps, sets, intensity, breakTime, category, null)
+        val exercise = Exercise(exerciseName, exerciseName, videoUrl, reps, sets, intensity, breakTime, category, null)
         val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/")
         val testData = database.getReference("TestData")
         testData.child(exerciseName).setValue(exercise).addOnSuccessListener {
@@ -133,6 +134,4 @@ class CreateActivity : AppCompatActivity() {
         }
         return super.dispatchTouchEvent(event)
     }
-
-
 }
