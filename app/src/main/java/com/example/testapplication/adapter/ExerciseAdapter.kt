@@ -9,7 +9,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testapplication.R
 import com.example.testapplication.model.Exercise
+import kotlinx.android.synthetic.main.activity_create.view.*
 import kotlinx.android.synthetic.main.recyclerview_design.view.*
+import org.w3c.dom.Text
 
 
 class ExerciseAdapter(private val exerciseList: ArrayList<Exercise>,
@@ -36,7 +38,6 @@ class ExerciseAdapter(private val exerciseList: ArrayList<Exercise>,
         val imgUri =
             Uri.parse("android.resource://com.example.testapplication/drawable/$cat")
         holder.exerciseImage.setImageURI(imgUri)
-
     }
 
     override fun getItemCount(): Int {

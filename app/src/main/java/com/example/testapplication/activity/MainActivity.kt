@@ -19,7 +19,6 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
 import com.example.testapplication.model.Exercise
-import kotlinx.android.synthetic.main.activity_edit.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -49,7 +48,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         exerciseList = arrayListOf<Exercise>()
         tempArrayList = arrayListOf<Exercise>()
-        getData()
+        getExerciseDataFromFirebase()
 
 
         create_button.setOnClickListener {
@@ -117,11 +116,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onResume() {
         super.onResume()
-        //getData()
+        //getExerciseDataFromFirebase()
     }
 
-    private fun getData() {
-        database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("TestData")
+    private fun getExerciseDataFromFirebase() {
+        database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/")
+            .getReference("TestData")
 
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -188,7 +188,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
         when (item.itemId) {
-            R.id.nav_list -> getData()
+            R.id.nav_list -> getExerciseDataFromFirebase()
 
             R.id.nav_cardio -> exerciseListIteration("Cardio")
 

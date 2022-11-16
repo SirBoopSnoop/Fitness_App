@@ -1,7 +1,6 @@
 package com.example.testapplication.activity
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -20,7 +19,7 @@ import kotlin.String
 
 class ViewExerciseActivity : YouTubeBaseActivity() {
     private lateinit var binding : ActivityViewexerciseBinding
-    private lateinit var path: String
+    private lateinit var exercisePath: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -29,12 +28,13 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
 
         val extras : Bundle? = intent.extras
         if (extras != null){
-            var value : String? = extras.getString("viewKey")
-            path = value.toString()
-            viewData(path)
+            val exerciseId : String? = extras.getString("viewKey")
+            exercisePath = exerciseId.toString()
+            viewData(exercisePath)
         }
 
-/*        initializePlayer(getYoutubeVideoIdFromUrl("https://www.youtube.com/watch?v=DkWokwdxCIU")!!)*/
+/*        initializePlayer(getYoutubeVideoIdFromUrl("https://www.youtube.com/watch?v=IODxDxX7oi4")!!)*/
+
 
         cancel_view_button.setOnClickListener {
             finish()
@@ -42,14 +42,14 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
 
         binding.editButton.setOnClickListener {
             Intent(this, EditActivity::class.java).also{
-                it.putExtra("key", path)
+                it.putExtra("key", exercisePath)
                 startActivity(it)
             }
         }
 
         binding.descriptionButton.setOnClickListener {
             Intent(this, AddDescriptionActivity::class.java).also{
-                it.putExtra("descKey", path)
+                it.putExtra("descKey", exercisePath)
                 startActivity(it)
             }
         }
@@ -69,16 +69,15 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
 
         binding.startButton.setOnClickListener {
             Intent(this, TimerActivity::class.java).also{
-                it.putExtra("timerKey", path)
+                it.putExtra("timerKey", exercisePath)
                 startActivity(it)
             }
         }
-
     }
 
     private fun deleteExercise() {
         val databaseRef = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("TestData")
-        databaseRef.child(path).removeValue().addOnSuccessListener {
+        databaseRef.child(exercisePath).removeValue().addOnSuccessListener {
             Toast.makeText(this, "Exercise has been deleted", Toast.LENGTH_LONG).show()
 
             val intent = Intent(this, MainActivity::class.java)
@@ -92,20 +91,19 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
         val extras : Bundle? = intent.extras
         if (extras != null){
             var value : String? = extras.getString("viewKey")
-            path = value.toString()
+            exercisePath = value.toString()
         }
-        viewData(path)
+        viewData(exercisePath)
     }
 
     @SuppressLint("SetTextI18n")
     private fun viewData(path:String){
         val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("TestData")
         database.child(path).get().addOnSuccessListener {
-
             if(it.exists()){
                 val exerciseName = it.child("exerciseName").value.toString()
                 val breakTime = it.child("breakTime").value.toString()
-                val description = it.child("description").value
+                val description = it.child("description").value.toString()
                 val category = it.child("category").value.toString()
                 val intensity = it.child("intensity").value.toString()
                 val reps = it.child("reps").value.toString()
@@ -113,17 +111,12 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
                 val video = it.child("videoUrl").value
 
                 binding.exerciseNameView.text = exerciseName
+                binding.exerciseCategory.text = category
                 binding.breakView.text = "Break time: $breakTime"
                 binding.repsView.text = "Reps: $reps"
                 binding.setsView.text = "Sets: $sets"
+                binding.description.text = description
                 binding.intensityView.text = "Intensity: $intensity"
-
-                if (description != null){
-                    binding.description.text = description.toString()
-                }else{
-                    binding.description.text = "..."
-                }
-
                 if (video != null){
                 getYoutubeVideoIdFromUrl(video.toString())?.let { it1 -> initializePlayer(it1) }
                 }else{
