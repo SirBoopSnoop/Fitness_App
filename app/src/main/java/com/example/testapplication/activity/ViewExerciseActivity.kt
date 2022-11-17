@@ -2,9 +2,13 @@ package com.example.testapplication.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.example.testapplication.YouTubeConfig
 import com.example.testapplication.databinding.ActivityViewexerciseBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -20,6 +24,7 @@ import kotlin.String
 class ViewExerciseActivity : YouTubeBaseActivity() {
     private lateinit var binding : ActivityViewexerciseBinding
     private lateinit var exercisePath: String
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -55,16 +60,26 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
         }
 
         binding.deleteViewButton.setOnClickListener  {
-            MaterialAlertDialogBuilder(this)
-                .setTitle("Delete exercise")
-                .setMessage("Are you sure you want to delete this exercise")
-                .setNegativeButton("Cancel") {dialog, which ->
-                    showSnackBar("Exercise has not been deleted.")
-                }
-                .setPositiveButton("Yes") {dialog, which ->
-                    deleteExercise()
-                }
-                .show()
+
+            //Check if the user is connected to the database or not
+            if(!isNetworkAvailable()) {
+                Toast.makeText(
+                    baseContext, "Please check your internet connection",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            else {
+                MaterialAlertDialogBuilder(this)
+                    .setTitle("Delete exercise")
+                    .setMessage("Are you sure you want to delete this exercise")
+                    .setNegativeButton("Cancel") {dialog, which ->
+                        showSnackBar("Exercise has not been deleted.")
+                    }
+                    .setPositiveButton("Yes") {dialog, which ->
+                        deleteExercise()
+                    }
+                    .show()
+            }
         }
 
         binding.startButton.setOnClickListener {
@@ -168,5 +183,13 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
 
     private fun showSnackBar(message: String) {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun isNetworkAvailable() : Boolean {
+        val connection = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        val capabilities = connection.getNetworkCapabilities(connection.activeNetwork)
+
+        return (capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET))
     }
 }

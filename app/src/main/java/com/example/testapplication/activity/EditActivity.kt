@@ -2,12 +2,16 @@ package com.example.testapplication.activity
 
 import android.content.Context
 import android.graphics.Rect
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testapplication.R
@@ -21,6 +25,7 @@ class EditActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditBinding //defining the binding class
     private lateinit var path : String
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditBinding.inflate(layoutInflater)
@@ -46,8 +51,17 @@ class EditActivity : AppCompatActivity() {
         }
 
         binding.saveButton.setOnClickListener {
-            // Get the checked radio button id from radio group
             val category = categoryDropdown.selectedItem
+
+            //Check if the user is connected to the database or not
+            if(!isNetworkAvailable()) {
+                Toast.makeText(
+                    baseContext, "Please check your internet connection",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            // Get the checked spinner id from radio group
             if (category == null) { // If none of the options are selected
                 Toast.makeText(applicationContext, "Please select a category", Toast.LENGTH_SHORT).show()
             }
@@ -183,6 +197,14 @@ class EditActivity : AppCompatActivity() {
             }
         }
         return super.dispatchTouchEvent(event)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun isNetworkAvailable() : Boolean {
+        val connection = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        val capabilities = connection.getNetworkCapabilities(connection.activeNetwork)
+
+        return (capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET))
     }
 
 }

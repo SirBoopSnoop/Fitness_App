@@ -1,8 +1,12 @@
 package com.example.testapplication.activity
 
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.example.testapplication.R
 import com.example.testapplication.databinding.ActivityAddDescriptionBinding
 import com.google.firebase.database.FirebaseDatabase
@@ -10,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase
 class AddDescriptionActivity : AppCompatActivity() {
     private lateinit var binding : ActivityAddDescriptionBinding
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_description)
@@ -38,8 +43,17 @@ class AddDescriptionActivity : AppCompatActivity() {
         }
 
         binding.saveDescButton.setOnClickListener {
-            updateExercise(path)
-            finish()
+            //Check if the user is connected to the database or not
+            if(!isNetworkAvailable()) {
+                Toast.makeText(
+                    baseContext, "Please check your internet connection",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            else {
+                updateExercise(path)
+                finish()
+            }
         }
 
         binding.cancelDescButton.setOnClickListener {
@@ -57,5 +71,13 @@ class AddDescriptionActivity : AppCompatActivity() {
             Toast.makeText(this, "Successfully updated", Toast.LENGTH_SHORT).show()
             finish()
         }.addOnFailureListener { Toast.makeText(this, "Failed...", Toast.LENGTH_SHORT).show() }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun isNetworkAvailable() : Boolean {
+        val connection = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        val capabilities = connection.getNetworkCapabilities(connection.activeNetwork)
+
+        return (capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET))
     }
 }
