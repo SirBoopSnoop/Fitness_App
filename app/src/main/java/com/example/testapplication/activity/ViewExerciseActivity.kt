@@ -139,7 +139,7 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
                     binding.description.text = description
                 }
 
-                if (video != null){
+                if ((video != null) && (video.toString() != "")){
                 getYoutubeVideoIdFromUrl(video.toString())?.let { it1 -> initializePlayer(it1) }
                 }else{
                     youtubePlay.visibility = View.GONE
