@@ -68,14 +68,7 @@ class CreateActivity : AppCompatActivity() {
             //Make sure input values are reasonable
             else if (TextUtils.isEmpty(binding.exerciseName.text)){
                 binding.exerciseName.error = "This field is required"
-            }else if(binding.categoryDropdown.selectedItem != "Cardio"){
-            if (TextUtils.isEmpty(binding.repsValue.text)){
-                binding.repsValue.error = "This field is required"
-            }else if(binding.repsValue.text.toString().toInt() < 1){
-                binding.repsValue.error = "Cannot be zero"
-            }
-            }
-            else if (TextUtils.isEmpty(binding.setsValue.text)){
+            }else if (TextUtils.isEmpty(binding.setsValue.text)){
                 binding.setsValue.error = "This field is required"
             }else if(binding.setsValue.text.toString().toInt() < 1){
                 binding.setsValue.error = "Cannot be zero"
@@ -87,7 +80,16 @@ class CreateActivity : AppCompatActivity() {
                 binding.breakTimeValue.error = "This field is required"
             }else if(binding.breakTimeValue.text.toString().toInt() < 1){
                 binding.breakTimeValue.error = "Cannot be zero"
-            }else {
+            }else if(binding.categoryDropdown.selectedItem != "Cardio"){
+                if (TextUtils.isEmpty(binding.repsValue.text)){
+                    binding.repsValue.error = "This field is required"
+                }else if(binding.repsValue.text.toString().toInt() < 1){
+                    binding.repsValue.error = "Cannot be zero"
+                }else{
+                    createExercise()
+                }
+            }
+            else {
                 createExercise()
             }
         }
