@@ -15,6 +15,7 @@ import com.google.android.gms.common.api.Response
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import java.math.RoundingMode
 import kotlin.math.roundToLong
@@ -33,6 +34,7 @@ class TimerActivity : AppCompatActivity() {
     lateinit var beep : MediaPlayer
     lateinit var beepLong : MediaPlayer
     lateinit var finish : MediaPlayer
+    var category : String? = ""
     var intensity : Double? = 0.0
     var pace : Long? = 0
     var reps : Long? = 0
@@ -71,7 +73,11 @@ class TimerActivity : AppCompatActivity() {
         button.setOnClickListener {
             if(!switch) {
                 beepLong.start()
-                startTimer()
+                if (category != "Cardio") {
+                    startTimer()
+                }else{
+                    cardioCountdown()
+                }
             }
             switch = true
         }
@@ -109,9 +115,12 @@ class TimerActivity : AppCompatActivity() {
         database.child(path).get().addOnSuccessListener {
 
             if (it.exists()) {
+                category = it.child("category").getValue(String::class.java)
                 breakTime = it.child("breakTime").getValue(Long::class.java)
                 intensity = it.child("intensity").getValue(Double::class.java)?.times(1000)
-                reps = it.child("reps").getValue(Long::class.java)
+                if (category != "Cardio") {
+                    reps = it.child("reps").getValue(Long::class.java)
+                }
                 sets = it.child("sets").getValue(Int::class.java)
                 pace = intensity?.roundToLong()
                 overview.text = "Set: $setCounter / $sets"
@@ -161,7 +170,37 @@ class TimerActivity : AppCompatActivity() {
             override fun onFinish() {
                 message.text = ""
                 beepLong.start()
-                startTimer()
+                if (category != "Cardio") {
+                    startTimer()
+                }else{
+                    cardioCountdown()
+                }
+            }
+        }
+        timer.start()
+    }
+
+    private fun cardioCountdown(){
+        message.text = "GO"
+        countdown.text = ""
+        timerText.text = ""
+        timer = object : CountDownTimer(intensity?.toLong()!!, 1){
+            override fun onTick(remaining: Long) {
+                countdown.text = remaining.div(1000).toBigDecimal().setScale(0, RoundingMode.UP).toString()
+            }
+
+            override fun onFinish() {
+                timerText.text = counter.toString()
+                if (setCounter != sets) {
+                    beepLong.start()
+                    message.text = "Get ready for the next set"
+                    counter = 0
+                    breakCountdown()
+                }else{
+                    timerText.text = ""
+                    message.text = "Exercise done!"
+                    finish.start()
+                }
             }
         }
         timer.start()

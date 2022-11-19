@@ -117,19 +117,24 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
         val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("TestData")
         database.child(path).get().addOnSuccessListener {
             if(it.exists()){
+                var reps = ""
                 val exerciseName = it.child("exerciseName").value.toString()
                 val breakTime = it.child("breakTime").value.toString()
                 var description = it.child("description").value.toString()
                 val category = it.child("category").value.toString()
                 val intensity = it.child("intensity").value.toString()
-                val reps = it.child("reps").value.toString()
+                if(category != "Cardio") {
+                    reps = it.child("reps").value.toString()
+                    binding.repsView.text = "Reps: $reps"
+                }else{
+                    binding.repsView.visibility = View.GONE
+                }
                 val sets = it.child("sets").value.toString()
                 val video = it.child("videoUrl").value
 
                 binding.exerciseNameView.text = exerciseName
                 binding.exerciseCategory.text = category
                 binding.breakView.text = "Break time: $breakTime"
-                binding.repsView.text = "Reps: $reps"
                 binding.setsView.text = "Sets: $sets"
                 binding.intensityView.text = "Intensity: $intensity"
 

@@ -28,6 +28,7 @@ import com.google.firebase.database.ktx.childEvents
 class CreateActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCreateBinding //defining the binding class
+    var reps : Int? = 0
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,11 +68,14 @@ class CreateActivity : AppCompatActivity() {
             //Make sure input values are reasonable
             else if (TextUtils.isEmpty(binding.exerciseName.text)){
                 binding.exerciseName.error = "This field is required"
-            }else if (TextUtils.isEmpty(binding.repsValue.text)){
+            }else if(binding.categoryDropdown.selectedItem != "Cardio"){
+            if (TextUtils.isEmpty(binding.repsValue.text)){
                 binding.repsValue.error = "This field is required"
             }else if(binding.repsValue.text.toString().toInt() < 1){
                 binding.repsValue.error = "Cannot be zero"
-            }else if (TextUtils.isEmpty(binding.setsValue.text)){
+            }
+            }
+            else if (TextUtils.isEmpty(binding.setsValue.text)){
                 binding.setsValue.error = "This field is required"
             }else if(binding.setsValue.text.toString().toInt() < 1){
                 binding.setsValue.error = "Cannot be zero"
@@ -112,11 +116,34 @@ class CreateActivity : AppCompatActivity() {
 
         //Makes the cancel button goes back to the main activity
         binding.cancelButton.setOnClickListener {finish()}
+
+        binding.categoryDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (categoryDropdown.selectedItem.equals("Cardio")){
+                    binding.repsLayout.visibility = View.GONE
+                    binding.intensityLayout.hint = "Duration"
+                    binding.intensityQuestion.visibility = View.GONE
+                }else{
+                    binding.setsLayout.visibility = View.VISIBLE
+                    binding.repsLayout.visibility = View.VISIBLE
+                    binding.intensityLayout.hint = "Intensity"
+                    binding.intensityQuestion.visibility = View.VISIBLE
+                }
+            }
+        }
     }
 
     private fun createExercise(){
         val exerciseName = binding.exerciseName.text.toString()
-        val reps = binding.repsValue.text.toString().toInt()
+        if (binding.categoryDropdown.selectedItem != "Cardio"){
+            reps = binding.repsValue.text.toString().toInt()
+        }else{
+            reps = null
+        }
         val sets = binding.setsValue.text.toString().toInt()
         val intensity = binding.intensityValue.text.toString().toDouble()
         val breakTime = binding.breakTimeValue.text.toString().toInt()
