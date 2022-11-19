@@ -117,9 +117,8 @@ class EditActivity : AppCompatActivity() {
     }
 
     private fun updateExercise(){
-        val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/")
-        val testData = database.getReference("TestData")
-
+        val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("TestData")
+        database.child(path).get().addOnSuccessListener {
         val youtubeLink = binding.youtubeLink.text.toString()
         val exerciseName = binding.exerciseName.text.toString()
         val reps = binding.repsValue.text.toString().toInt()
@@ -127,21 +126,15 @@ class EditActivity : AppCompatActivity() {
         val intensity = binding.intensityValue.text.toString().toDouble()
         val breakTime = binding.breakTimeValue.text.toString().toInt()
         val category = binding.categoryDropdown.selectedItem.toString()
+        val description = it.child("description").value.toString()
 
-        var description = ""
-
-/*        testData.child(path).child("description").get().addOnSuccessListener(){
-            if (it.exists()){
-                description = it.value.toString()
-            }
-        }*/
 
         val exercise = Exercise(path, exerciseName, youtubeLink, reps, sets, intensity, breakTime, category, description)
-        testData.child(path).setValue(exercise).addOnSuccessListener {
+        database.child(path).setValue(exercise).addOnSuccessListener {
             Toast.makeText(this, "Successfully updated", Toast.LENGTH_SHORT).show()
             finish()
         }.addOnFailureListener { Toast.makeText(this, "Failed...", Toast.LENGTH_SHORT).show() }
-
+        }
     }
 
     private fun fillContents(path:String){

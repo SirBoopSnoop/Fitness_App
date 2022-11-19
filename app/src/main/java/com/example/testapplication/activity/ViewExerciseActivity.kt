@@ -119,7 +119,7 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
             if(it.exists()){
                 val exerciseName = it.child("exerciseName").value.toString()
                 val breakTime = it.child("breakTime").value.toString()
-                val description = it.child("description").value.toString()
+                var description = it.child("description").value.toString()
                 val category = it.child("category").value.toString()
                 val intensity = it.child("intensity").value.toString()
                 val reps = it.child("reps").value.toString()
@@ -131,8 +131,14 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
                 binding.breakView.text = "Break time: $breakTime"
                 binding.repsView.text = "Reps: $reps"
                 binding.setsView.text = "Sets: $sets"
-                binding.description.text = description
                 binding.intensityView.text = "Intensity: $intensity"
+
+                if (it.child("description").value == null){
+                    binding.description.text = ""
+                }else{
+                    binding.description.text = description
+                }
+
                 if (video != null){
                 getYoutubeVideoIdFromUrl(video.toString())?.let { it1 -> initializePlayer(it1) }
                 }else{

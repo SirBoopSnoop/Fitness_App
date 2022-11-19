@@ -123,7 +123,7 @@ class CreateActivity : AppCompatActivity() {
         val category = binding.categoryDropdown.selectedItem.toString()
         val videoUrl = binding.youtubeLink.text.toString()
 
-        val exercise = Exercise(exerciseName, exerciseName, videoUrl, reps, sets, intensity, breakTime, category, null)
+        val exercise = Exercise(exerciseName, exerciseName, videoUrl, reps, sets, intensity, breakTime, category, "")
         val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/")
         val testData = database.getReference("TestData")
         testData.child(exerciseName).setValue(exercise).addOnSuccessListener {
