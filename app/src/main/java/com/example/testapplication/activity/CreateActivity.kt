@@ -29,6 +29,7 @@ class CreateActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCreateBinding //defining the binding class
     var reps : Int? = 0
+    var message : String = ""
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,8 +98,7 @@ class CreateActivity : AppCompatActivity() {
         binding.intensityQuestion.setOnClickListener {
             val dialog = AlertDialog.Builder(this)
             dialog.setCancelable(true)
-            //dialog.setTitle("What is intensity?")
-            dialog.setMessage(getString(R.string.intensity_description))
+            dialog.setMessage(message)
             dialog.setNeutralButton("Dismiss"){dialogInterface , which ->
                 dialogInterface.cancel()
             }
@@ -128,8 +128,9 @@ class CreateActivity : AppCompatActivity() {
                 if (categoryDropdown.selectedItem.equals("Cardio")){
                     binding.repsLayout.visibility = View.GONE
                     binding.intensityLayout.hint = "Duration"
-                    binding.intensityQuestion.visibility = View.GONE
+                    message = getString(R.string.duration_description)
                 }else{
+                    message = getString(R.string.intensity_description)
                     binding.setsLayout.visibility = View.VISIBLE
                     binding.repsLayout.visibility = View.VISIBLE
                     binding.intensityLayout.hint = "Intensity"

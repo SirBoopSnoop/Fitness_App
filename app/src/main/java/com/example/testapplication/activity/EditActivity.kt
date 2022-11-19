@@ -25,6 +25,7 @@ class EditActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditBinding //defining the binding class
     private lateinit var path : String
     var reps : Int? = 0
+    var message : String = ""
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,8 +96,7 @@ class EditActivity : AppCompatActivity() {
         binding.intensityQuestion.setOnClickListener {
             val dialog = AlertDialog.Builder(this)
             dialog.setCancelable(true)
-            //dialog.setTitle("What is intensity?")
-            dialog.setMessage(getString(R.string.intensity_description))
+            dialog.setMessage(message)
             dialog.setNeutralButton("Dismiss"){dialogInterface , which ->
                 dialogInterface.cancel()
             }
@@ -127,8 +127,9 @@ class EditActivity : AppCompatActivity() {
                 if (categoryDropdown.selectedItem.equals("Cardio")){
                     binding.repsLayout.visibility = View.GONE
                     binding.intensityLayout.hint = "Duration"
-                    binding.intensityQuestion.visibility = View.GONE
+                    message = getString(R.string.duration_description)
                 }else{
+                    message = getString(R.string.intensity_description)
                     binding.setsLayout.visibility = View.VISIBLE
                     binding.repsLayout.visibility = View.VISIBLE
                     binding.intensityLayout.hint = "Intensity"
@@ -186,12 +187,12 @@ class EditActivity : AppCompatActivity() {
                 val index : Int
 
                 when(category){
-                    "Cardio" -> index=0
-                    "Arms" -> index=1
-                    "Chest" -> index=2
-                    "Abs" -> index=3
-                    "Legs" -> index=4
-                    "Back" -> index=5
+                    "Arms" -> index=0
+                    "Chest" -> index=1
+                    "Abs" -> index=2
+                    "Legs" -> index=3
+                    "Back" -> index=4
+                    "Cardio" -> index=5
                     else -> { index=0 }
                 }
 
