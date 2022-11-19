@@ -225,6 +225,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
                 exercise_RecyclerView.adapter!!.notifyDataSetChanged()
             }
+            exerciseList.clear()
+            exerciseList.addAll(tempArrayList)
+            if(exerciseList.isNotEmpty()) {
+                exercise_RecyclerView.adapter!!.notifyDataSetChanged()
+            }
         }
         when (item.itemId) {
             R.id.nav_list -> getExerciseDataFromFirebase()
