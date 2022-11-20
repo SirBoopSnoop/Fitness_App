@@ -143,8 +143,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     }
                     exercise_RecyclerView.adapter!!.notifyDataSetChanged()
                 } else {
-                    tempArrayList.clear()
-                    tempArrayList.addAll(exerciseList)
+/*                    tempArrayList.clear()
+                    tempArrayList.addAll(exerciseList)*/
                     if(exerciseList.isNotEmpty()) {
                         exercise_RecyclerView.adapter!!.notifyDataSetChanged()
                     }
@@ -170,8 +170,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 for (exerciseSnapshot in snapshot.children) {
                     val exercise = exerciseSnapshot.getValue(Exercise::class.java)
                     exerciseList.add(exercise!!)
+                    tempArrayList.clear()
                 }
-//                tempArrayList.clear()
                 tempArrayList.addAll(exerciseList)
 
                 // Access the RecyclerView Adapter and load the data into it
