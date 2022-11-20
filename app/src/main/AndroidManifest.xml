@@ -29,6 +29,7 @@
         <activity android:name=".activity.CreateActivity" />
         <activity android:name=".activity.EditActivity" />
         <activity android:name=".activity.ViewExerciseActivity"/>
+        <activity android:name=".fragment.YouTubeFragment"/>
         <activity
             android:name=".activity.MainActivity"
             android:exported="true"

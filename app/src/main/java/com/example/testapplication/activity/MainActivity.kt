@@ -231,6 +231,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 exercise_RecyclerView.adapter!!.notifyDataSetChanged()
             }
         }
+
         when (item.itemId) {
             R.id.nav_list -> getExerciseDataFromFirebase()
 

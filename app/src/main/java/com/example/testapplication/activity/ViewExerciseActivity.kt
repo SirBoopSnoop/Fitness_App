@@ -9,19 +9,17 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import com.example.testapplication.YouTubeConfig
+import androidx.appcompat.app.AppCompatActivity
+import com.example.testapplication.R
 import com.example.testapplication.databinding.ActivityViewexerciseBinding
+import com.example.testapplication.fragment.YouTubeFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.youtube.player.YouTubeBaseActivity
-import com.google.android.youtube.player.YouTubeInitializationResult
-import com.google.android.youtube.player.YouTubePlayer
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_viewexercise.*
-import java.util.regex.Pattern
 import kotlin.String
 
-class ViewExerciseActivity : YouTubeBaseActivity() {
+class ViewExerciseActivity : AppCompatActivity() {
     private lateinit var binding : ActivityViewexerciseBinding
     private lateinit var exercisePath: String
     @RequiresApi(Build.VERSION_CODES.M)
@@ -37,8 +35,6 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
             exercisePath = exerciseId.toString()
             viewData(exercisePath)
         }
-
-/*        initializePlayer(getYoutubeVideoIdFromUrl("https://www.youtube.com/watch?v=IODxDxX7oi4")!!)*/
 
 
         cancel_view_button.setOnClickListener {
@@ -83,8 +79,8 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
         }
 
         binding.startButton.setOnClickListener {
-            Intent(this, TimerActivity::class.java).also{
-                it.putExtra("timerKey", exercisePath)
+            Intent(this, YouTubeFragment::class.java).also{
+                it.putExtra("videoKey", exercisePath)
                 startActivity(it)
             }
         }
@@ -144,18 +140,18 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
                     binding.description.text = description
                 }
 
-                if ((video != null) && (video.toString() != "")){
+/*                if ((video != null) && (video.toString() != "")){
                 getYoutubeVideoIdFromUrl(video.toString())?.let { it1 -> initializePlayer(it1) }
                 }else{
                     youtubePlay.visibility = View.GONE
                     errorView.visibility = View.VISIBLE
-                    errorView.text = "No video has been added for this exercise"}
+                    errorView.text = "No video has been added for this exercise"}*/
 
             }
         }
     }
 
-    private fun initializePlayer(videoId : String){
+/*    private fun initializePlayer(videoId : String){
         val config = YouTubeConfig()
         youtubePlay.initialize(config.API_KEY,object : YouTubePlayer.OnInitializedListener{
             override fun onInitializationSuccess(
@@ -178,9 +174,9 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
                 println(p1)
             }
         })
-    }
+    }*/
 
-    private fun getYoutubeVideoIdFromUrl(inUrl : String): String?{
+/*    private fun getYoutubeVideoIdFromUrl(inUrl : String): String?{
         if (inUrl.lowercase().contains("youtu.be")){
             return inUrl.substring(inUrl.lastIndexOf("/") + 1)
         }
@@ -190,7 +186,7 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
         return if (matcher.find()){
             matcher.group()
         }else null
-    }
+    }*/
 
     private fun showSnackBar(message: String) {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
@@ -203,4 +199,5 @@ class ViewExerciseActivity : YouTubeBaseActivity() {
 
         return (capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET))
     }
+
 }
