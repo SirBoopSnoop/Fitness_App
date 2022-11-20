@@ -57,6 +57,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //Database
+        database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/")
+            .getReference("TestData")
+
         supportActionBar?.hide()
 
         noInternetLayout = findViewById(R.id.no_internet)
@@ -155,13 +159,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onResume() {
         super.onResume()
         connectionDrawLayout()
-        //getExerciseDataFromFirebase()
+//        getExerciseDataFromFirebase()
     }
 
     private fun getExerciseDataFromFirebase() {
-        database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/")
-            .getReference("TestData")
-
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
             if (snapshot.exists()){
@@ -170,8 +171,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     val exercise = exerciseSnapshot.getValue(Exercise::class.java)
                     exerciseList.add(exercise!!)
                 }
-                tempArrayList.clear()
+//                tempArrayList.clear()
                 tempArrayList.addAll(exerciseList)
+
                 // Access the RecyclerView Adapter and load the data into it
                 recyclerView.adapter = ExerciseAdapter(tempArrayList, this@MainActivity)
             }
@@ -189,14 +191,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     override fun onItemClick(position: Int) {
-        val clickedItem : Exercise = exerciseList[position]
+        val clickedItem : Exercise = tempArrayList[position]
 
         //Sends the data intent to ViewExerciseActivity
             Intent(this, ViewExerciseActivity::class.java).also{
                 it.putExtra("viewKey", clickedItem.exerciseId)
                 startActivity(it)
             }
-
         recyclerView.adapter?.notifyItemChanged(position)
     }
 
@@ -225,8 +226,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
                 exercise_RecyclerView.adapter!!.notifyDataSetChanged()
             }
-            exerciseList.clear()
-            exerciseList.addAll(tempArrayList)
+
             if(exerciseList.isNotEmpty()) {
                 exercise_RecyclerView.adapter!!.notifyDataSetChanged()
             }

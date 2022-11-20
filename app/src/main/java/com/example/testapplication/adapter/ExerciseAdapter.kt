@@ -30,8 +30,6 @@ class ExerciseAdapter(private val exerciseList: ArrayList<Exercise>,
         //Assigning values to the views were created in the recycler_design layout file
         //Based on the position of the recycler view
         val currentItem = exerciseList[position]
-/*        holder.exerciseImage.setImageResource(currentItem.category)*/
-
         holder.textView1.text = currentItem.exerciseName
         holder.textView2.text = currentItem.category
         var cat = currentItem.category.toString().lowercase() + "_icon"
