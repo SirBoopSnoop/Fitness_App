@@ -11,6 +11,7 @@
     <string name="break_time">Break time</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+    <string name="duration_description">Define how many seconds you want a set to last</string>
     <string name="intensity_description">Define how quickly you want to perform the reps in a set. For instance, a value of "1" will set the pace to one rep every second. A value of 0.5 will set the pace to 2 reps per second, and a value of 2 will set the pace to 1 rep every 2 seconds, etc.</string>
     <string name="break_description">Define how many seconds you want to wait before starting a new set</string>
     <string name="exercise_name">Exercise Name</string>
@@ -26,12 +27,12 @@
     <string name="youtube_video_link">Youtube video link</string>
 
     <string-array name="category_list">
-        <item>Cardio</item>
         <item>Arms</item>
         <item>Chest</item>
         <item>Abs</item>
         <item>Legs</item>
         <item>Back</item>
+        <item>Cardio</item>
     </string-array>
 
 </resources>
