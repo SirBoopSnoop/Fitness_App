@@ -1,11 +1,13 @@
 package com.example.testapplication.fragment
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import com.example.testapplication.R
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.get
 import com.example.testapplication.YouTubeConfig
 import com.example.testapplication.databinding.YoutubeFragmentBinding
 import com.google.android.youtube.player.YouTubeBaseActivity
@@ -37,6 +39,13 @@ class YouTubeFragment :  YouTubeBaseActivity(){
             finish()
         }
 
+        val orientation = resources.configuration.orientation
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            binding.cancelViewButton.visibility = View.GONE
+        } else {
+            binding.cancelViewButton.visibility = View.VISIBLE
+        }
+
     }
 
     private fun viewData(path:String){
@@ -44,8 +53,6 @@ class YouTubeFragment :  YouTubeBaseActivity(){
         database.child(path).get().addOnSuccessListener {
             if(it.exists()){
                 val video = it.child("videoUrl").value
-
-
 
                 if ((video != null) && (video.toString() != "")){
                     getYoutubeVideoIdFromUrl(video.toString())?.let { it1 -> initializePlayer(it1) }
@@ -94,4 +101,5 @@ class YouTubeFragment :  YouTubeBaseActivity(){
             matcher.group()
         }else null
     }
+
 }
