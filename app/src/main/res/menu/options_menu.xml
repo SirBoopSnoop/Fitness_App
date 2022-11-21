@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/video_item"
+        android:icon="@drawable/ic_baseline_ondemand_video_24"
+        android:title="Watch video"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/edit_item"
+        android:icon="@drawable/ic_baseline_edit_24"
+        android:title="Edit"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/remove_item"
+        android:icon="@drawable/ic_baseline_delete_24"
+        android:title="Remove"
+        app:showAsAction="never"/>
+</menu>
