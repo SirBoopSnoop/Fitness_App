@@ -7,6 +7,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
+import android.provider.ContactsContract.Data
 import android.text.TextUtils
 import android.view.MotionEvent
 import android.view.View
@@ -16,13 +17,19 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testapplication.R
+import com.example.testapplication.adapter.ExerciseAdapter
 import com.example.testapplication.databinding.ActivityCreateBinding
 import com.example.testapplication.model.Exercise
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_create.*
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.childEvents
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.database.ktx.snapshots
 
 
 class CreateActivity : AppCompatActivity() {
@@ -63,13 +70,19 @@ class CreateActivity : AppCompatActivity() {
                 ).show()
             }
 
+            checkIfExerciseNameExists()
+
             if (category == null) { // If none of the options are selected
                 Toast.makeText(applicationContext, "Please select a category", Toast.LENGTH_SHORT).show()
             }
             //Make sure input values are reasonable
             else if (TextUtils.isEmpty(binding.exerciseName.text)){
                 binding.exerciseName.error = "This field is required"
-            }else if (TextUtils.isEmpty(binding.setsValue.text)){
+            }
+/*            else if (!TextUtils.isEmpty(binding.exerciseName.text) && checkIfExerciseNameExists()) {
+                println("o")
+            }*/
+            else if (TextUtils.isEmpty(binding.setsValue.text)){
                 binding.setsValue.error = "This field is required"
             }else if(binding.setsValue.text.toString().toInt() < 1){
                 binding.setsValue.error = "Cannot be zero"
@@ -155,12 +168,64 @@ class CreateActivity : AppCompatActivity() {
 
         val exercise = Exercise(exerciseName, exerciseName, videoUrl, reps, sets, intensity, breakTime, category, "")
         val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/")
-        val testData = database.getReference("TestData")
-        testData.child(exerciseName).setValue(exercise).addOnSuccessListener {
-            Toast.makeText(this, "Successfully saved", Toast.LENGTH_SHORT).show()
+        .getReference("TestData")
+
+        database.child(exerciseName).setValue(exercise).addOnSuccessListener {
+            Toast.makeText(applicationContext, "Successfully saved", Toast.LENGTH_SHORT).show()
             finish()
-        }.addOnFailureListener { Toast.makeText(this, "Failed...", Toast.LENGTH_SHORT).show() }
+        }.addOnFailureListener {
+            Toast.makeText(applicationContext, "Failed...", Toast.LENGTH_SHORT).show() }
+
+/*        database.addValueEventListener(object : ValueEventListener {
+           override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (exerciseSnapshot in snapshot.children) {
+                        val exercises = exerciseSnapshot.getValue(Exercise::class.java)
+                        val exerciseSnapshotName = exercises?.exerciseName
+                        if (exerciseSnapshotName!! == exerciseName) {
+                            Toast.makeText(applicationContext, "Exercise name already exists", Toast.LENGTH_SHORT).show()
+                            binding.exerciseName.error = "Exists"
+                        }
+                    }*/
+
+
+
+/*            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })*/
     }
+
+    private fun checkIfExerciseNameExists() : Boolean {
+        val exerciseName = binding.exerciseName.text.toString()
+        val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/")
+            .getReference("TestData")
+
+        database.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (exerciseSnapshot in snapshot.children) {
+                        val exercises = exerciseSnapshot.getValue(Exercise::class.java)
+                        val exerciseSnapshotName = exercises!!.exerciseName
+                        if (exerciseSnapshotName!! == exerciseName) {
+                            Toast.makeText(this@CreateActivity, "Exercise name already exists.",
+                                Toast.LENGTH_SHORT).show()
+                            binding.exerciseName.error = "Exercise name already exists."
+                            break
+                        }
+                        else {
+                            createExercise()
+                        }
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+        return true
+    }
+
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {

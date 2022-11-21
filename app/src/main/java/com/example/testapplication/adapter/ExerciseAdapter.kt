@@ -39,7 +39,7 @@ class ExerciseAdapter(private val exerciseList: ArrayList<Exercise>,
     }
 
     override fun getItemCount(): Int {
-        //The recycler view just wants to know the number of items you want displayed
+        //The recycler view wants to know the number of items you want to be displayed
         return exerciseList.size
     }
 
