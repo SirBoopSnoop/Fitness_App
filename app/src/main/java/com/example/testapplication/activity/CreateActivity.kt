@@ -37,6 +37,7 @@ class CreateActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateBinding //defining the binding class
     var reps : Int? = 0
     var message : String = ""
+    var nameList = arrayListOf<String>()
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +57,7 @@ class CreateActivity : AppCompatActivity() {
             dropdown.adapter = adapter
         }
 
+        getExerciseNames()
 
         // Get spinner group selected status
         binding.saveButton.setOnClickListener {
@@ -70,7 +72,8 @@ class CreateActivity : AppCompatActivity() {
                 ).show()
             }
 
-            checkIfExerciseNameExists()
+            /*checkName(binding.exerciseName.text.toString())*/
+            //checkIfExerciseNameExists()
 
             if (category == null) { // If none of the options are selected
                 Toast.makeText(applicationContext, "Please select a category", Toast.LENGTH_SHORT).show()
@@ -79,9 +82,9 @@ class CreateActivity : AppCompatActivity() {
             else if (TextUtils.isEmpty(binding.exerciseName.text)){
                 binding.exerciseName.error = "This field is required"
             }
-/*            else if (!TextUtils.isEmpty(binding.exerciseName.text) && checkIfExerciseNameExists()) {
-                println("o")
-            }*/
+            else if(checkIfExerciseNameExists()) {
+                binding.exerciseName.error = "Name conflict detected"
+            }
             else if (TextUtils.isEmpty(binding.setsValue.text)){
                 binding.setsValue.error = "This field is required"
             }else if(binding.setsValue.text.toString().toInt() < 1){
@@ -198,35 +201,20 @@ class CreateActivity : AppCompatActivity() {
 
     private fun checkIfExerciseNameExists() : Boolean {
         val exerciseName = binding.exerciseName.text.toString()
-        val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/")
-            .getReference("TestData")
+        var check = false
+            for (name in nameList) {
+            if (name == exerciseName) {
+                check = true
+            }
+        }
+        return check
+    }
 
-        database.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (exerciseSnapshot in snapshot.children) {
-                        val exercises = exerciseSnapshot.getValue(Exercise::class.java)
-                        val exerciseSnapshotName = exercises!!.exerciseName
-                        if (exerciseSnapshotName!! == exerciseName) {
-                            Toast.makeText(this@CreateActivity, "Exercise name already exists.",
-                                Toast.LENGTH_SHORT).show()
-                            binding.exerciseName.error = "Exercise name already exists."
-                            break
-                        }
-                        else {
-                            createExercise()
-                        }
-                    }
-                }
-            }
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
+    private fun checkName() : Boolean{
         return true
     }
 
-
+// Removes focus from input fields when you click away from them
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
             val v: View? = currentFocus
@@ -250,5 +238,29 @@ class CreateActivity : AppCompatActivity() {
         val capabilities = connection.getNetworkCapabilities(connection.activeNetwork)
 
         return (capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET))
+    }
+
+    private fun getExerciseNames(){
+        val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/")
+            .getReference("TestData")
+        database.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (exerciseSnapshot in snapshot.children) {
+                        val exerciseName = exerciseSnapshot.getValue(Exercise::class.java)!!.exerciseName!!
+                        nameList.add(exerciseName)
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@CreateActivity, "Database Error", Toast.LENGTH_LONG).show()
+            }
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        nameList.clear()
+        getExerciseNames()
     }
 }
