@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.Button
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import com.example.testapplication.R
 import com.example.testapplication.databinding.ActivityEditBinding
 import com.example.testapplication.databinding.ActivityTimerBinding
@@ -21,7 +22,6 @@ import java.math.RoundingMode
 import kotlin.math.roundToLong
 
 class TimerActivity : AppCompatActivity() {
-
 
     private lateinit var path: String
     lateinit var timer : CountDownTimer
@@ -39,13 +39,13 @@ class TimerActivity : AppCompatActivity() {
     var pace : Long? = 0
     var reps : Long? = 0
     var counter :Int = 0
-    var setCounter : Int = 1
     var breakTime : Long? = 0
     var sets : Int? = 0
     var switch : Boolean = false
+    var isRunning : Boolean = false
+    var setCounter : Int = 1
     private lateinit var binding: ActivityTimerBinding
     private var database : DatabaseReference = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("TestData")
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,25 +89,11 @@ class TimerActivity : AppCompatActivity() {
             timerText.text = ""
             countdown.text = ""
             message.text = ""
+            if(isRunning){
             timer.cancel()
+            }
         }
     }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        switch = false
-        setData(path)
-        setCounter = 1
-        counter = 0
-        timerText.text = ""
-        countdown.text = ""
-        message.text = ""
-        if (switch){
-            timer.cancel()
-        }
-
-    }
-
 
     @SuppressLint("SetTextI18n")
     private fun setData(path:String){
@@ -133,7 +119,9 @@ class TimerActivity : AppCompatActivity() {
         message.text = "GO"
         countdown.text = ""
         timer = object : CountDownTimer(reps?.let { pace?.times(it) }!!, pace!!){
+
             override fun onTick(remaining: Long) {
+                isRunning = true
                 timerText.text = counter.toString()
                 if (counter != 0) {
                     beep.start()
@@ -142,6 +130,7 @@ class TimerActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
+                isRunning = false
                 timerText.text = counter.toString()
                 beep.start()
                 if (setCounter != sets) {
@@ -164,10 +153,12 @@ class TimerActivity : AppCompatActivity() {
         overview.text = "Set: $setCounter / $sets"
         timer = object : CountDownTimer(breakTime?.times(1000)!!, 1){
             override fun onTick(remaining: Long) {
+                isRunning = true
                 countdown.text = remaining.div(1000).toBigDecimal().setScale(0, RoundingMode.UP).toString()
             }
 
             override fun onFinish() {
+                isRunning = false
                 message.text = ""
                 beepLong.start()
                 if (category != "Cardio") {
@@ -186,10 +177,12 @@ class TimerActivity : AppCompatActivity() {
         timerText.text = ""
         timer = object : CountDownTimer(intensity?.toLong()!!, 1){
             override fun onTick(remaining: Long) {
+                isRunning = true
                 countdown.text = remaining.div(1000).toBigDecimal().setScale(0, RoundingMode.UP).toString()
             }
 
             override fun onFinish() {
+                isRunning = false
                 timerText.text = counter.toString()
                 if (setCounter != sets) {
                     beepLong.start()
@@ -204,5 +197,34 @@ class TimerActivity : AppCompatActivity() {
             }
         }
         timer.start()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (isRunning){
+            timer.cancel()
+        }
+        switch = false
+        setData(path)
+        setCounter = 1
+        counter = 0
+        timerText.text = ""
+        countdown.text = ""
+        message.text = ""
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (isRunning){
+            timer.cancel()
+        }
+        switch = false
+        setData(path)
+        setCounter = 1
+        counter = 0
+        timerText.text = ""
+        countdown.text = ""
+        message.text = ""
     }
 }

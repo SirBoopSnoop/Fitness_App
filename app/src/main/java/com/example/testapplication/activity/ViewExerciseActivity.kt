@@ -36,9 +36,13 @@ class ViewExerciseActivity : AppCompatActivity() {
             viewData(exercisePath)
         }
 
+        //https://www.youtube.com/watch?v=IODxDxX7oi4
 
-        cancel_view_button.setOnClickListener {
-            finish()
+        binding.videoButton.setOnClickListener {
+            Intent(this, YouTubeFragment::class.java).also{
+                it.putExtra("videoKey", exercisePath)
+                startActivity(it)
+            }
         }
 
         binding.editButton.setOnClickListener {
@@ -79,8 +83,8 @@ class ViewExerciseActivity : AppCompatActivity() {
         }
 
         binding.startButton.setOnClickListener {
-            Intent(this, YouTubeFragment::class.java).also{
-                it.putExtra("videoKey", exercisePath)
+            Intent(this, TimerActivity::class.java).also{
+                it.putExtra("timerKey", exercisePath)
                 startActivity(it)
             }
         }

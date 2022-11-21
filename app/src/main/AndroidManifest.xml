@@ -22,7 +22,8 @@
         android:theme="@style/Theme.TestApplication"
         tools:targetApi="31">
         <activity
-            android:name=".activity.TimerActivity" />
+            android:name=".activity.TimerActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.AddDescriptionActivity"
             android:exported="false" />

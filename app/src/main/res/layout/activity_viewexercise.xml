@@ -188,10 +188,10 @@
         app:layout_constraintGuide_percent="0.25"/>
 
     <Button
-        android:id="@+id/cancel_view_button"
+        android:id="@+id/video_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cancel"
+        android:text="Video"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="@+id/guideline1" />
