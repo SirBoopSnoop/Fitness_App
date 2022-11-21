@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_viewexercise.*
 import kotlin.String
 
 class ViewExerciseActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityViewexerciseBinding
+    private lateinit var binding: ActivityViewexerciseBinding
     private lateinit var exercisePath: String
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -32,34 +32,38 @@ class ViewExerciseActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.video_item -> {
-                Intent(this, YouTubeFragment::class.java).also{
+                Intent(this, YouTubeFragment::class.java).also {
                     it.putExtra("videoKey", exercisePath)
                     startActivity(it)
                 }
             }
 
             R.id.edit_item -> {
-                    Intent(this, EditActivity::class.java).also {
+                Intent(this, EditActivity::class.java).also {
                     it.putExtra("key", exercisePath)
                     startActivity(it)
                 }
             }
             R.id.remove_item -> {
+
                 //Check if the user is connected to the database or not
-                if(!isNetworkAvailable()) {
-                    Toast.makeText(baseContext, "Please check your internet connection",
-                        Toast.LENGTH_SHORT).show()
+                if (!isNetworkAvailable()) {
+                    Toast.makeText(
+                        baseContext, "Please check your internet connection",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
                     MaterialAlertDialogBuilder(this)
                         .setTitle("Delete exercise")
                         .setMessage("Are you sure you want to delete this exercise")
-                        .setNegativeButton("Cancel") {dialog, which ->
+                        .setNegativeButton("Cancel") { dialog, which ->
                             showSnackBar("Exercise has not been deleted.")
                         }
-                        .setPositiveButton("Yes") {dialog, which ->
-                            deleteExercise() }.show()
+                        .setPositiveButton("Yes") { dialog, which ->
+                            deleteExercise()
+                        }.show()
                 }
             }
         }
@@ -73,14 +77,14 @@ class ViewExerciseActivity : AppCompatActivity() {
         binding = ActivityViewexerciseBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val extras : Bundle? = intent.extras
-        if (extras != null){
-            val exerciseId : String? = extras.getString("viewKey")
+        val extras: Bundle? = intent.extras
+        if (extras != null) {
+            val exerciseId: String? = extras.getString("viewKey")
             exercisePath = exerciseId.toString()
             viewData(exercisePath)
         }
 
-        cancel_view_button.setOnClickListener {
+/*        cancel_view_button.setOnClickListener {
             finish()
         }
 
@@ -89,16 +93,16 @@ class ViewExerciseActivity : AppCompatActivity() {
                 it.putExtra("key", exercisePath)
                 startActivity(it)
             }
-        }
+        }*/
 
         binding.descriptionButton.setOnClickListener {
-            Intent(this, AddDescriptionActivity::class.java).also{
+            Intent(this, AddDescriptionActivity::class.java).also {
                 it.putExtra("descKey", exercisePath)
                 startActivity(it)
             }
         }
 
-        binding.deleteViewButton.setOnClickListener  {
+/*        binding.deleteViewButton.setOnClickListener  {
 
             //Check if the user is connected to the database or not
             if(!isNetworkAvailable()) {
@@ -126,7 +130,33 @@ class ViewExerciseActivity : AppCompatActivity() {
                 it.putExtra("videoKey", exercisePath)
                 startActivity(it)
             }
+        }*/
+
+        bottom_navigation.setOnItemReselectedListener{ it ->
+            when (it.itemId) {
+                R.id.home -> finish()
+
+                R.id.video -> {
+                    Intent(this, YouTubeFragment::class.java).also {
+                    it.putExtra("videoKey", exercisePath)
+                    startActivity(it)
+                    }}
+
+                R.id.edit -> {
+                    Intent(this, EditActivity::class.java).also{
+                    it.putExtra("key", exercisePath)
+                    startActivity(it)
+                }}
+
+                R.id.timer -> {
+                    Intent(this, TimerActivity::class.java).also{
+                        it.putExtra("timerKey", exercisePath)
+                        startActivity(it)
+                    }
+                }
+            }
         }
+
     }
 
     private fun deleteExercise() {

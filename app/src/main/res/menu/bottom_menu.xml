@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Home"/>
+
+    <item
+        android:id="@+id/video"
+        android:icon="@drawable/ic_baseline_ondemand_video_24"
+        android:title="Watch video"/>
+
+    <item android:id="@+id/edit"
+        android:icon="@drawable/ic_baseline_edit_24"
+        android:title="Edit" />
+
+    <item android:id="@+id/timer"
+        android:icon="@drawable/ic_baseline_timer_24"
+        android:title="Timer" />
+</menu>
