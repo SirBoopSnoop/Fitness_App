@@ -6,6 +6,8 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -22,6 +24,48 @@ import kotlin.String
 class ViewExerciseActivity : AppCompatActivity() {
     private lateinit var binding : ActivityViewexerciseBinding
     private lateinit var exercisePath: String
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.options_menu, menu)
+        return true
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.video_item -> {
+                Intent(this, YouTubeFragment::class.java).also{
+                    it.putExtra("videoKey", exercisePath)
+                    startActivity(it)
+                }
+            }
+
+            R.id.edit_item -> {
+                    Intent(this, EditActivity::class.java).also {
+                    it.putExtra("key", exercisePath)
+                    startActivity(it)
+                }
+            }
+            R.id.remove_item -> {
+                //Check if the user is connected to the database or not
+                if(!isNetworkAvailable()) {
+                    Toast.makeText(baseContext, "Please check your internet connection",
+                        Toast.LENGTH_SHORT).show()
+                } else {
+                    MaterialAlertDialogBuilder(this)
+                        .setTitle("Delete exercise")
+                        .setMessage("Are you sure you want to delete this exercise")
+                        .setNegativeButton("Cancel") {dialog, which ->
+                            showSnackBar("Exercise has not been deleted.")
+                        }
+                        .setPositiveButton("Yes") {dialog, which ->
+                            deleteExercise() }.show()
+                }
+            }
+        }
+        return true
+    }
+
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +79,6 @@ class ViewExerciseActivity : AppCompatActivity() {
             exercisePath = exerciseId.toString()
             viewData(exercisePath)
         }
-
 
         cancel_view_button.setOnClickListener {
             finish()
