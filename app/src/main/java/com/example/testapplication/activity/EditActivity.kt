@@ -77,7 +77,7 @@ class EditActivity : AppCompatActivity(){
             //Make sure input values are reasonable
             else if (TextUtils.isEmpty(binding.exerciseName.text)){
                 binding.exerciseName.error = "This field is required"
-            }else if (checkIfExerciseNameExists()){
+            }else if (checkIfExerciseNameExists() && binding.exerciseName.text.toString() != path){
                 binding.exerciseName.error = "An exercise with that name already exists"
             }else if (TextUtils.isEmpty(binding.setsValue.text)){
                 binding.setsValue.error = "This field is required"
@@ -252,9 +252,7 @@ class EditActivity : AppCompatActivity(){
         for (name in nameList) {
             if (name == exerciseName) {
                 check = true
-            }
-            if (name == path){
-                check = false
+                break
             }
         }
         return check
