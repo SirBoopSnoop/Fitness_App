@@ -181,6 +181,46 @@ class ViewExerciseActivity : AppCompatActivity() {
         viewData(exercisePath)
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        val extras : Bundle? = intent!!.extras
+        if (extras != null){
+            var value : String? = extras.getString("viewKey")
+            exercisePath = value.toString()
+        }
+        viewData(exercisePath)
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        val extras : Bundle? = intent.extras
+        if (extras != null){
+            var value : String? = extras.getString("viewKey")
+            exercisePath = value.toString()
+        }
+        viewData(exercisePath)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val extras : Bundle? = intent.extras
+        if (extras != null){
+            var value : String? = extras.getString("viewKey")
+            exercisePath = value.toString()
+        }
+        viewData(exercisePath)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        val extras : Bundle? = intent.extras
+        if (extras != null){
+            var value : String? = extras.getString("viewKey")
+            exercisePath = value.toString()
+        }
+        viewData(exercisePath)
+    }
+
     @SuppressLint("SetTextI18n")
     private fun viewData(path:String){
         val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("TestData")
