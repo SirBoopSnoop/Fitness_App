@@ -17,17 +17,19 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testapplication.R
 import com.example.testapplication.databinding.ActivityEditBinding
+import com.example.testapplication.fragment.YouTubeFragment
 import com.example.testapplication.model.Exercise
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_create.*
+import kotlinx.android.synthetic.main.activity_viewexercise.*
 
 class EditActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityEditBinding //defining the binding class
-    private lateinit var path : String
+    private lateinit var exercisePath : String
     var reps : Int? = 0
     var message : String = ""
     var nameList = arrayListOf<String>()
@@ -53,8 +55,8 @@ class EditActivity : AppCompatActivity(){
         val extras : Bundle? = intent.extras
         if (extras != null) {
             var value: String? = extras.getString("key")
-            path = value.toString()
-            fillContents(path)
+            exercisePath = value.toString()
+            fillContents(exercisePath)
         }
 
         getExerciseNames()
@@ -126,9 +128,9 @@ class EditActivity : AppCompatActivity(){
             dialog.show()
         }
 
-        binding.cancelButton.setOnClickListener {
+/*        binding.cancelButton.setOnClickListener {
             finish()
-        }
+        }*/
 
         binding.categoryDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -149,11 +151,42 @@ class EditActivity : AppCompatActivity(){
                 }
             }
         }
+
+        bottom_navigation.setOnItemSelectedListener { it ->
+            when (it.itemId) {
+                R.id.view_exercise -> {
+                    Intent(this, ViewExerciseActivity::class.java).also {
+                        startActivity(it)
+                    }
+                }
+
+                R.id.home -> {Intent(this, MainActivity::class.java).also {
+                    startActivity(it)
+                    }
+                }
+
+                R.id.video -> {
+                    Intent(this, YouTubeFragment::class.java).also {
+                        it.putExtra("videoKey", exercisePath)
+                        startActivity(it)
+                    }
+                }
+
+                R.id.timer -> {
+                    Intent(this, TimerActivity::class.java).also {
+                        it.putExtra("timerKey", exercisePath)
+                        startActivity(it)
+                    }
+                }
+            }
+            true
+        }
+
     }
 
     private fun updateExercise(){
         val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/").getReference("TestData")
-        database.child(path).get().addOnSuccessListener {
+        database.child(exercisePath).get().addOnSuccessListener {
         val youtubeLink = binding.youtubeLink.text.toString()
         val exerciseName = binding.exerciseName.text.toString()
         if (binding.categoryDropdown.selectedItem != "Cardio"){
