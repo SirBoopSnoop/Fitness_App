@@ -15,7 +15,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.testapplication.R
 import com.example.testapplication.databinding.ActivityViewexerciseBinding
 import com.example.testapplication.fragment.YouTubeFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.navigation.NavigationBarItemView
+import com.google.android.material.navigation.NavigationBarView
+import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_viewexercise.*
@@ -132,29 +137,32 @@ class ViewExerciseActivity : AppCompatActivity() {
             }
         }*/
 
-        bottom_navigation.setOnItemReselectedListener{ it ->
+        bottom_navigation.setOnItemSelectedListener { it ->
             when (it.itemId) {
                 R.id.home -> finish()
 
                 R.id.video -> {
                     Intent(this, YouTubeFragment::class.java).also {
-                    it.putExtra("videoKey", exercisePath)
-                    startActivity(it)
-                    }}
+                        it.putExtra("videoKey", exercisePath)
+                        startActivity(it)
+                    }
+                }
 
                 R.id.edit -> {
-                    Intent(this, EditActivity::class.java).also{
-                    it.putExtra("key", exercisePath)
-                    startActivity(it)
-                }}
+                    Intent(this, EditActivity::class.java).also {
+                        it.putExtra("key", exercisePath)
+                        startActivity(it)
+                    }
+                }
 
                 R.id.timer -> {
-                    Intent(this, TimerActivity::class.java).also{
+                    Intent(this, TimerActivity::class.java).also {
                         it.putExtra("timerKey", exercisePath)
                         startActivity(it)
                     }
                 }
             }
+            true
         }
 
     }

@@ -174,7 +174,7 @@ class CreateActivity : AppCompatActivity() {
         .getReference("TestData")
 
         database.child(exerciseName).setValue(exercise).addOnSuccessListener {
-            Toast.makeText(applicationContext, "Successfully saved", Toast.LENGTH_SHORT).show()
+            /*Toast.makeText(applicationContext, "Successfully saved", Toast.LENGTH_SHORT).show()*/
             finish()
         }.addOnFailureListener {
             Toast.makeText(applicationContext, "Failed...", Toast.LENGTH_SHORT).show() }
