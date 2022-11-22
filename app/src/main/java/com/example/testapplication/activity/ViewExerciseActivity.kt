@@ -139,7 +139,10 @@ class ViewExerciseActivity : AppCompatActivity() {
 
         bottom_navigation.setOnItemSelectedListener { it ->
             when (it.itemId) {
-                R.id.home -> finish()
+                R.id.home -> {Intent(this, MainActivity::class.java).also {
+                    startActivity(it)
+                    }
+                }
 
                 R.id.video -> {
                     Intent(this, YouTubeFragment::class.java).also {
@@ -164,7 +167,6 @@ class ViewExerciseActivity : AppCompatActivity() {
             }
             true
         }
-
     }
 
     private fun deleteExercise() {

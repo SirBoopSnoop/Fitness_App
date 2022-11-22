@@ -2,14 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/home"
-        android:icon="@drawable/ic_baseline_home_24"
-        android:title="Home"/>
+        android:id="@+id/view_exercise"
+        android:icon="@drawable/ic_baseline_view_list_24"
+        android:title="View Exercise"/>
 
     <item
         android:id="@+id/video"
         android:icon="@drawable/ic_baseline_ondemand_video_24"
         android:title="Watch video"/>
+
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Home"/>
 
     <item android:id="@+id/edit"
         android:icon="@drawable/ic_baseline_edit_24"
