@@ -94,12 +94,16 @@ class TimerActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.view_exercise -> {
                     Intent(this, ViewExerciseActivity::class.java).also {
+                        stopCounting()
+                        finish()
                         startActivity(it)
                     }
                 }
 
                 R.id.home -> {
                     Intent(this, MainActivity::class.java).also {
+                        stopCounting()
+                        finish()
                         startActivity(it)
                     }
                 }
@@ -107,6 +111,8 @@ class TimerActivity : AppCompatActivity() {
                 R.id.video -> {
                     Intent(this, YouTubeFragment::class.java).also {
                         it.putExtra("videoKey", exercisePath)
+                        stopCounting()
+                        finish()
                         startActivity(it)
                     }
                 }
@@ -114,6 +120,8 @@ class TimerActivity : AppCompatActivity() {
                 R.id.edit -> {
                     Intent(this, EditActivity::class.java).also {
                         it.putExtra("key", exercisePath)
+                        stopCounting()
+                        finish()
                         startActivity(it)
                     }
                 }
@@ -229,21 +237,16 @@ class TimerActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        if (isRunning){
-            timer.cancel()
-        }
-        switch = false
-        setData(exercisePath)
-        setCounter = 1
-        counter = 0
-        timerText.text = ""
-        countdown.text = ""
-        message.text = ""
+        stopCounting()
 
     }
 
     override fun onResume() {
         super.onResume()
+        stopCounting()
+    }
+
+    fun stopCounting(){
         if (isRunning){
             timer.cancel()
         }
