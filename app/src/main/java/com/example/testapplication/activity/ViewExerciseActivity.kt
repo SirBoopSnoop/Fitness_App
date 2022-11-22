@@ -136,7 +136,6 @@ class ViewExerciseActivity : AppCompatActivity() {
                 startActivity(it)
             }
         }*/
-
         bottom_navigation.setOnItemSelectedListener { it ->
             when (it.itemId) {
                 R.id.home -> {Intent(this, MainActivity::class.java).also {
@@ -162,6 +161,12 @@ class ViewExerciseActivity : AppCompatActivity() {
                     Intent(this, TimerActivity::class.java).also {
                         it.putExtra("timerKey", exercisePath)
                         startActivity(it)
+                    }
+                }
+
+                R.id.view_exercise -> {
+                    Intent(this, ViewExerciseActivity::class.java).also {
+                        finish()
                     }
                 }
             }
