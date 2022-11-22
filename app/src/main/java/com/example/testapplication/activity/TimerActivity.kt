@@ -1,29 +1,25 @@
 package com.example.testapplication.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.Button
 import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
 import com.example.testapplication.R
-import com.example.testapplication.databinding.ActivityEditBinding
 import com.example.testapplication.databinding.ActivityTimerBinding
-import com.example.testapplication.model.Exercise
-import com.google.android.gms.common.api.Response
+import com.example.testapplication.fragment.YouTubeFragment
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
-import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_viewexercise.*
 import java.math.RoundingMode
 import kotlin.math.roundToLong
 
 class TimerActivity : AppCompatActivity() {
 
-    private lateinit var path: String
+    private lateinit var exercisePath: String
     lateinit var timer : CountDownTimer
     lateinit var timerText : TextView
     lateinit var button: Button
@@ -53,9 +49,9 @@ class TimerActivity : AppCompatActivity() {
         val extras : Bundle? = intent.extras
         if (extras != null){
             var value : String? = extras.getString("timerKey")
-            path = value.toString()
+            exercisePath = value.toString()
         }
-        setData(path)
+        setData(exercisePath)
 
         binding = ActivityTimerBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -83,7 +79,7 @@ class TimerActivity : AppCompatActivity() {
         }
         reset.setOnClickListener {
             switch = false
-            setData(path)
+            setData(exercisePath)
             setCounter = 1
             counter = 0
             timerText.text = ""
@@ -93,6 +89,38 @@ class TimerActivity : AppCompatActivity() {
             timer.cancel()
             }
         }
+
+        bottom_navigation.setOnItemSelectedListener { it ->
+            when (it.itemId) {
+                R.id.view_exercise -> {
+                    Intent(this, ViewExerciseActivity::class.java).also {
+                        startActivity(it)
+                    }
+                }
+
+                R.id.home -> {
+                    Intent(this, MainActivity::class.java).also {
+                        startActivity(it)
+                    }
+                }
+
+                R.id.video -> {
+                    Intent(this, YouTubeFragment::class.java).also {
+                        it.putExtra("videoKey", exercisePath)
+                        startActivity(it)
+                    }
+                }
+
+                R.id.edit -> {
+                    Intent(this, EditActivity::class.java).also {
+                        it.putExtra("key", exercisePath)
+                        startActivity(it)
+                    }
+                }
+            }
+            true
+        }
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -205,7 +233,7 @@ class TimerActivity : AppCompatActivity() {
             timer.cancel()
         }
         switch = false
-        setData(path)
+        setData(exercisePath)
         setCounter = 1
         counter = 0
         timerText.text = ""
@@ -220,7 +248,7 @@ class TimerActivity : AppCompatActivity() {
             timer.cancel()
         }
         switch = false
-        setData(path)
+        setData(exercisePath)
         setCounter = 1
         counter = 0
         timerText.text = ""
