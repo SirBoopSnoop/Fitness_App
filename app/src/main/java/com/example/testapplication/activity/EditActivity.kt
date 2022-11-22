@@ -14,18 +14,23 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.testapplication.R
 import com.example.testapplication.databinding.ActivityEditBinding
 import com.google.firebase.database.FirebaseDatabase
 import com.example.testapplication.model.Exercise
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_create.*
 
-class EditActivity : AppCompatActivity() {
+class EditActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityEditBinding //defining the binding class
     private lateinit var path : String
     var reps : Int? = 0
     var message : String = ""
+    var nameList = arrayListOf<String>()
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +57,8 @@ class EditActivity : AppCompatActivity() {
             fillContents(path)
         }
 
+        getExerciseNames()
+
         binding.saveButton.setOnClickListener {
             val category = categoryDropdown.selectedItem
 
@@ -70,7 +77,9 @@ class EditActivity : AppCompatActivity() {
             //Make sure input values are reasonable
             else if (TextUtils.isEmpty(binding.exerciseName.text)){
                 binding.exerciseName.error = "This field is required"
-            }else if (TextUtils.isEmpty(binding.setsValue.text)){
+            }/*else if (checkIfExerciseNameExists()){
+                binding.exerciseName.error = "Name conflict detected"
+            }*/else if (TextUtils.isEmpty(binding.setsValue.text)){
                 binding.setsValue.error = "This field is required"
             }else if(binding.setsValue.text.toString().toInt() < 1){
                 binding.setsValue.error = "Cannot be zero"
@@ -159,8 +168,9 @@ class EditActivity : AppCompatActivity() {
         val description = it.child("description").value.toString()
 
 
-        val exercise = Exercise(path, exerciseName, youtubeLink, reps, sets, intensity, breakTime, category, description)
-        database.child(path).setValue(exercise).addOnSuccessListener {
+        val exercise = Exercise(exerciseName, exerciseName, youtubeLink, reps, sets, intensity, breakTime, category, description)
+        database.child(exerciseName).removeValue()
+        database.child(exerciseName).setValue(exercise).addOnSuccessListener {
             Toast.makeText(this, "Successfully updated", Toast.LENGTH_SHORT).show()
             finish()
         }.addOnFailureListener { Toast.makeText(this, "Failed...", Toast.LENGTH_SHORT).show() }
@@ -228,6 +238,35 @@ class EditActivity : AppCompatActivity() {
         val capabilities = connection.getNetworkCapabilities(connection.activeNetwork)
 
         return (capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET))
+    }
+
+    private fun checkIfExerciseNameExists() : Boolean {
+        val exerciseName = binding.exerciseName.text.toString()
+        var check = false
+        for (name in nameList) {
+            if (name == exerciseName) {
+                check = true
+            }
+        }
+        return check
+    }
+
+    private fun getExerciseNames(){
+        val database = FirebaseDatabase.getInstance("https://fitnessapp-11fe0-default-rtdb.europe-west1.firebasedatabase.app/")
+            .getReference("TestData")
+        database.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (exerciseSnapshot in snapshot.children) {
+                        val exerciseName = exerciseSnapshot.getValue(Exercise::class.java)!!.exerciseName!!
+                        nameList.add(exerciseName)
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@EditActivity, "Database Error", Toast.LENGTH_LONG).show()
+            }
+        })
     }
 
 }

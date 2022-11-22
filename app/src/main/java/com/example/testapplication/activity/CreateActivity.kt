@@ -178,25 +178,6 @@ class CreateActivity : AppCompatActivity() {
             finish()
         }.addOnFailureListener {
             Toast.makeText(applicationContext, "Failed...", Toast.LENGTH_SHORT).show() }
-
-/*        database.addValueEventListener(object : ValueEventListener {
-           override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (exerciseSnapshot in snapshot.children) {
-                        val exercises = exerciseSnapshot.getValue(Exercise::class.java)
-                        val exerciseSnapshotName = exercises?.exerciseName
-                        if (exerciseSnapshotName!! == exerciseName) {
-                            Toast.makeText(applicationContext, "Exercise name already exists", Toast.LENGTH_SHORT).show()
-                            binding.exerciseName.error = "Exists"
-                        }
-                    }*/
-
-
-
-/*            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })*/
     }
 
     private fun checkIfExerciseNameExists() : Boolean {
@@ -208,10 +189,6 @@ class CreateActivity : AppCompatActivity() {
             }
         }
         return check
-    }
-
-    private fun checkName() : Boolean{
-        return true
     }
 
 // Removes focus from input fields when you click away from them
