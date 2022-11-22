@@ -82,10 +82,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="?android:attr/windowBackground"
-            app:itemBackground="@color/black"
+            app:itemBackground="@color/gray"
             app:itemIconTint="#FFF"
             app:itemTextColor="#FFF"
-            app:menu="@menu/bottom_menu"
-            app:labelVisibilityMode="labeled"/>
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/bottom_menu"/>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

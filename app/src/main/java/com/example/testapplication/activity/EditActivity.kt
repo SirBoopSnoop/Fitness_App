@@ -79,7 +79,7 @@ class EditActivity : AppCompatActivity(){
             //Make sure input values are reasonable
             else if (TextUtils.isEmpty(binding.exerciseName.text)){
                 binding.exerciseName.error = "This field is required"
-            }else if (checkIfExerciseNameExists() && binding.exerciseName.text.toString() != path){
+            }else if (checkIfExerciseNameExists() && binding.exerciseName.text.toString() != exercisePath){
                 binding.exerciseName.error = "An exercise with that name already exists"
             }else if (TextUtils.isEmpty(binding.setsValue.text)){
                 binding.setsValue.error = "This field is required"
@@ -202,8 +202,8 @@ class EditActivity : AppCompatActivity(){
 
 
         val exercise = Exercise(exerciseName, youtubeLink, reps, sets, intensity, breakTime, category, description)
-        if(exerciseName != path){
-        database.child(path).removeValue()
+        if(exerciseName != exercisePath){
+        database.child(exercisePath).removeValue()
         }
         database.child(exerciseName).setValue(exercise).addOnSuccessListener {
             Toast.makeText(this, "Successfully updated", Toast.LENGTH_SHORT).show()

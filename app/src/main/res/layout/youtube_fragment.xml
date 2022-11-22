@@ -6,16 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-<!--    <Button
-        android:id="@+id/cancel_view_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />-->
-
     <TextView
         android:id="@+id/errorView"
         android:layout_width="match_parent"
@@ -37,27 +27,20 @@
 
     </com.google.android.youtube.player.YouTubePlayerView>
 
-    <RelativeLayout
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="?android:attr/windowBackground"
+        app:itemBackground="@color/gray"
+        app:itemIconTint="#FFF"
+        app:itemTextColor="#FFF"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_menu" />
 
-        <FrameLayout
-            android:id="@+id/wrapper"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/bottom_navigation"/>
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="?android:attr/windowBackground"
-            app:itemBackground="@color/black"
-            app:itemIconTint="#FFF"
-            app:itemTextColor="#FFF"
-            app:menu="@menu/bottom_menu"
-            app:labelVisibilityMode="labeled"/>
-    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
