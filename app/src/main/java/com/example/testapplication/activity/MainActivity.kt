@@ -195,7 +195,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //Sends the data intent to ViewExerciseActivity
             Intent(this, ViewExerciseActivity::class.java).also{
-                it.putExtra("viewKey", clickedItem.exerciseId)
+                it.putExtra("viewKey", clickedItem.exerciseName)
                 startActivity(it)
             }
         recyclerView.adapter?.notifyItemChanged(position)

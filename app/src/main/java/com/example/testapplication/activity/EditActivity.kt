@@ -168,7 +168,7 @@ class EditActivity : AppCompatActivity(){
         val description = it.child("description").value.toString()
 
 
-        val exercise = Exercise(exerciseName, exerciseName, youtubeLink, reps, sets, intensity, breakTime, category, description)
+        val exercise = Exercise(exerciseName, youtubeLink, reps, sets, intensity, breakTime, category, description)
         if(exerciseName != path){
         database.child(path).removeValue()
         }

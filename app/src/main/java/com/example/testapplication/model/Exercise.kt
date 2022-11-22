@@ -1,6 +1,6 @@
 package com.example.testapplication.model
 
-data class Exercise(val exerciseId : String? = null,
+data class Exercise(
                     val exerciseName : String? = null,
                     val videoUrl : String? = null,
                     val reps : Int? = null,
