@@ -29,7 +29,8 @@
             android:exported="false" />
         <activity android:name=".activity.CreateActivity" />
         <activity android:name=".activity.EditActivity" />
-        <activity android:name=".activity.ViewExerciseActivity"/>
+        <activity android:name=".activity.ViewExerciseActivity"
+            android:launchMode="singleTask"/>
         <activity android:name=".fragment.YouTubeFragment"/>
         <activity
             android:name=".activity.MainActivity"
