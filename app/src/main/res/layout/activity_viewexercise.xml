@@ -150,9 +150,9 @@
 
             <Button
                 android:id="@+id/description_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Change description" />
+                app:icon = "@drawable/ic_baseline_edit_24"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
     </ScrollView>
@@ -222,7 +222,7 @@
             android:id="@+id/wrapper"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/bottom_navigation"/>
+            android:layout_above="@id/bottom_navigation" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
