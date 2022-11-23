@@ -1,5 +1,6 @@
 package com.example.testapplication.activity
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Rect
@@ -21,6 +22,7 @@ import com.example.testapplication.adapter.ExerciseAdapter
 import com.example.testapplication.databinding.ActivityCreateBinding
 import com.example.testapplication.model.Exercise
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.slider.Slider
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_create.*
 import com.google.android.material.snackbar.Snackbar
@@ -30,6 +32,10 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.childEvents
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.database.ktx.snapshots
+import java.text.DecimalFormat
+import kotlin.math.pow
+import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 
 
 class CreateActivity : AppCompatActivity() {
@@ -89,11 +95,11 @@ class CreateActivity : AppCompatActivity() {
                 binding.setsValue.error = "This field is required"
             }else if(binding.setsValue.text.toString().toInt() < 1){
                 binding.setsValue.error = "Cannot be zero"
-            }else if (TextUtils.isEmpty(binding.intensityValue.text)){
+            }/*else if (TextUtils.isEmpty(binding.intensityValue.text)){
                 binding.intensityValue.error = "This field is required"
             }else if(binding.intensityValue.text.toString().toDouble() < 0.2){
                 binding.intensityValue.error = "Cannot be less than 0.2"
-            }else if (TextUtils.isEmpty(binding.breakTimeValue.text)){
+            }*/else if (TextUtils.isEmpty(binding.breakTimeValue.text)){
                 binding.breakTimeValue.error = "This field is required"
             }else if(binding.breakTimeValue.text.toString().toInt() < 1){
                 binding.breakTimeValue.error = "Cannot be zero"
@@ -140,16 +146,20 @@ class CreateActivity : AppCompatActivity() {
 
             }
 
+            @SuppressLint("SetTextI18n")
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if (categoryDropdown.selectedItem.equals("Cardio")){
                     binding.repsLayout.visibility = View.GONE
-                    binding.intensityLayout.hint = "Duration"
+/*                    binding.intensityLayout.hint = "Duration"*/
+                    binding.textView4.text = "Duration"
+                    binding.intensityValue.valueFrom = 0F
+                    binding.intensityValue.valueTo = 10000F
                     message = getString(R.string.duration_description)
                 }else{
                     message = getString(R.string.intensity_description)
                     binding.setsLayout.visibility = View.VISIBLE
                     binding.repsLayout.visibility = View.VISIBLE
-                    binding.intensityLayout.hint = "Intensity"
+/*                    binding.intensityLayout.hint = "Intensity"*/
                     binding.intensityQuestion.visibility = View.VISIBLE
                 }
             }
@@ -162,9 +172,12 @@ class CreateActivity : AppCompatActivity() {
             reps = binding.repsValue.text.toString().toInt()
         }else{
             reps = null
+
         }
         val sets = binding.setsValue.text.toString().toInt()
-        val intensity = binding.intensityValue.text.toString().toDouble()
+/*        val intensity = binding.intensityValue.text.toString().toDouble()*/
+        val df = DecimalFormat("#.##")
+        val intensity = df.format(binding.intensityValue.value).toDouble()
         val breakTime = binding.breakTimeValue.text.toString().toInt()
         val category = binding.categoryDropdown.selectedItem.toString()
         val videoUrl = binding.youtubeLink.text.toString()
