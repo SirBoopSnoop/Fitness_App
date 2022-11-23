@@ -139,6 +139,7 @@ class ViewExerciseActivity : AppCompatActivity() {
         bottom_navigation.setOnItemSelectedListener { it ->
             when (it.itemId) {
                 R.id.home -> {Intent(this, MainActivity::class.java).also {
+                    finish()
                     startActivity(it)
                     }
                 }
@@ -166,7 +167,6 @@ class ViewExerciseActivity : AppCompatActivity() {
 
                 R.id.view_exercise -> {
                     Intent(this, ViewExerciseActivity::class.java).also {
-                        finish()
                     }
                 }
             }

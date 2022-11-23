@@ -161,6 +161,7 @@ class EditActivity : AppCompatActivity(){
                 }
 
                 R.id.home -> {Intent(this, MainActivity::class.java).also {
+                    finish()
                     startActivity(it)
                     }
                 }

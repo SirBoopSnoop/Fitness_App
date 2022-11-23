@@ -62,6 +62,7 @@ class YouTubeFragment :  YouTubeBaseActivity(){
 
                 R.id.home -> {
                     Intent(this, MainActivity::class.java).also {
+                    finish()
                     startActivity(it)
                     }
                 }
