@@ -5,10 +5,6 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStore
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.get
 import com.example.testapplication.R
 import com.example.testapplication.YouTubeConfig
 import com.example.testapplication.activity.EditActivity
@@ -43,18 +39,18 @@ class YouTubeFragment :  YouTubeBaseActivity(){
 
 /*        binding.cancelViewButton.setOnClickListener {
             finish()
-        }
+        }*/
 
         val orientation = resources.configuration.orientation
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            binding.cancelViewButton.visibility = View.GONE
+            binding.bottomNavigation.visibility = View.GONE
         } else {
-            binding.cancelViewButton.visibility = View.VISIBLE
-        }*/
+            binding.bottomNavigation.visibility = View.VISIBLE
+        }
 
         bottom_navigation.setOnItemSelectedListener { it ->
             when (it.itemId) {
-                R.id.view_exercise -> {
+                R.id.backpress -> {
                     Intent(this, ViewExerciseActivity::class.java).also {
                         startActivity(it)
                     }

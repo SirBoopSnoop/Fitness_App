@@ -15,12 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.testapplication.R
 import com.example.testapplication.databinding.ActivityViewexerciseBinding
 import com.example.testapplication.fragment.YouTubeFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.navigation.NavigationBarItemView
-import com.google.android.material.navigation.NavigationBarView
-import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener
-import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_viewexercise.*
@@ -165,8 +160,9 @@ class ViewExerciseActivity : AppCompatActivity() {
                     }
                 }
 
-                R.id.view_exercise -> {
+                R.id.backpress -> {
                     Intent(this, ViewExerciseActivity::class.java).also {
+                        finish()
                     }
                 }
             }

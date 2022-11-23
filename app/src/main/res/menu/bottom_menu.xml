@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/view_exercise"
+        android:id="@+id/backpress"
         android:icon="@drawable/ic_baseline_keyboard_return_24"
         android:title="Back"/>
 

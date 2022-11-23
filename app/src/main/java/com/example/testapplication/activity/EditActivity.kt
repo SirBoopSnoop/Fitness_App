@@ -154,7 +154,7 @@ class EditActivity : AppCompatActivity(){
 
         bottom_navigation.setOnItemSelectedListener { it ->
             when (it.itemId) {
-                R.id.view_exercise -> {
+                R.id.backpress -> {
                     Intent(this, ViewExerciseActivity::class.java).also {
                         startActivity(it)
                     }

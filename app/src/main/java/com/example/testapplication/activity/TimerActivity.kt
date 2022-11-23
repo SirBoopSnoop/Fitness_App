@@ -92,7 +92,7 @@ class TimerActivity : AppCompatActivity() {
 
         bottom_navigation.setOnItemSelectedListener { it ->
             when (it.itemId) {
-                R.id.view_exercise -> {
+                R.id.backpress -> {
                     Intent(this, ViewExerciseActivity::class.java).also {
                         stopCounting()
                         finish()
@@ -186,7 +186,6 @@ class TimerActivity : AppCompatActivity() {
 
     private fun breakCountdown(){
         setCounter++
-        overview.text = "Set: $setCounter / $sets"
         timer = object : CountDownTimer(breakTime?.times(1000)!!, 1){
             override fun onTick(remaining: Long) {
                 isRunning = true
@@ -194,6 +193,7 @@ class TimerActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
+                overview.text = "Set: $setCounter / $sets"
                 isRunning = false
                 message.text = ""
                 beepLong.start()
@@ -246,7 +246,7 @@ class TimerActivity : AppCompatActivity() {
         stopCounting()
     }
 
-    fun stopCounting(){
+    private fun stopCounting(){
         if (isRunning){
             timer.cancel()
         }
