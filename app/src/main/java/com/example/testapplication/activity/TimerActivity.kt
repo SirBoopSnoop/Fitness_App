@@ -95,8 +95,9 @@ class TimerActivity : AppCompatActivity() {
                 R.id.backpress -> {
                     Intent(this, ViewExerciseActivity::class.java).also {
                         stopCounting()
-                        finish()
+                        it.putExtra("viewKey", exercisePath)
                         startActivity(it)
+                        finish()
                     }
                 }
 

@@ -48,7 +48,9 @@ class YouTubeFragment :  YouTubeBaseActivity(){
             when (it.itemId) {
                 R.id.backpress -> {
                     Intent(this, ViewExerciseActivity::class.java).also {
+                        it.putExtra("viewKey", exercisePath)
                         startActivity(it)
+                        finish()
                     }
                 }
 
@@ -63,6 +65,7 @@ class YouTubeFragment :  YouTubeBaseActivity(){
                     Intent(this, EditActivity::class.java).also {
                         it.putExtra("key", exercisePath)
                         startActivity(it)
+                        finish()
                     }
                 }
 
@@ -70,6 +73,7 @@ class YouTubeFragment :  YouTubeBaseActivity(){
                     Intent(this, TimerActivity::class.java).also {
                         it.putExtra("timerKey", exercisePath)
                         startActivity(it)
+                        finish()
                     }
                 }
             }

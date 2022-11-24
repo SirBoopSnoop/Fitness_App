@@ -152,7 +152,9 @@ class EditActivity : AppCompatActivity(){
             when (it.itemId) {
                 R.id.backpress -> {
                     Intent(this, ViewExerciseActivity::class.java).also {
+                        it.putExtra("viewKey", exercisePath)
                         startActivity(it)
+                        finish()
                     }
                 }
 
@@ -166,6 +168,7 @@ class EditActivity : AppCompatActivity(){
                     Intent(this, YouTubeFragment::class.java).also {
                         it.putExtra("videoKey", exercisePath)
                         startActivity(it)
+                        finish()
                     }
                 }
 
@@ -173,6 +176,7 @@ class EditActivity : AppCompatActivity(){
                     Intent(this, TimerActivity::class.java).also {
                         it.putExtra("timerKey", exercisePath)
                         startActivity(it)
+                        finish()
                     }
                 }
             }

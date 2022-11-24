@@ -165,7 +165,7 @@ class ViewExerciseActivity : AppCompatActivity() {
         viewData(exercisePath)
     }
 
-    override fun onRestart() {
+/*    override fun onRestart() {
         super.onRestart()
         val extras : Bundle? = intent.extras
         if (extras != null){
@@ -183,9 +183,9 @@ class ViewExerciseActivity : AppCompatActivity() {
             exercisePath = value.toString()
         }
         viewData(exercisePath)
-    }
+    }*/
 
-    override fun onDestroy() {
+/*    override fun onDestroy() {
         super.onDestroy()
         val extras : Bundle? = intent.extras
         if (extras != null){
@@ -193,7 +193,7 @@ class ViewExerciseActivity : AppCompatActivity() {
             exercisePath = value.toString()
         }
         viewData(exercisePath)
-    }
+    }*/
 
     @SuppressLint("SetTextI18n")
     private fun viewData(path:String){
