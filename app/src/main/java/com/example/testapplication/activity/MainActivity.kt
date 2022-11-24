@@ -121,11 +121,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //Finding the search.xml from SearchView as Id
         val item = menu!!.findItem(R.id.searchView)
         val searchView = item!!.actionView as SearchView
+
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             //It'll just disable the press button
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
+
             @SuppressLint("NotifyDataSetChanged")
             //Whenever an user type something the function will listen to each letter
             override fun onQueryTextChange(newText: String?): Boolean {
@@ -140,8 +142,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     }
                     exercise_RecyclerView.adapter!!.notifyDataSetChanged()
                 } else {
-/*                    tempArrayList.clear()
-                    tempArrayList.addAll(exerciseList)*/
+                    getExerciseDataFromFirebase()
                     if(exerciseList.isNotEmpty()) {
                         exercise_RecyclerView.adapter!!.notifyDataSetChanged()
                     }
