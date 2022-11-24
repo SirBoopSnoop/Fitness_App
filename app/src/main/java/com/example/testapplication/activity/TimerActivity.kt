@@ -158,8 +158,10 @@ class TimerActivity : AppCompatActivity() {
         timer = object : CountDownTimer(reps?.let { pace?.times(it) }!!, pace!!){
 
             override fun onTick(remaining: Long) {
+
+
                 isRunning = true
-                timerText.text = counter.toString()
+                timerText.text = "$counter / $reps"
                 if (counter != 0) {
                     beep.start()
                 }
@@ -168,7 +170,7 @@ class TimerActivity : AppCompatActivity() {
 
             override fun onFinish() {
                 isRunning = false
-                timerText.text = counter.toString()
+                timerText.text = "$counter / $reps"
                 beep.start()
                 if (setCounter != sets) {
                     message.text = "Get ready for the next set"
