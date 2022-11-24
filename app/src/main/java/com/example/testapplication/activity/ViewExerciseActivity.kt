@@ -103,6 +103,7 @@ class ViewExerciseActivity : AppCompatActivity() {
                     Intent(this, YouTubeFragment::class.java).also {
                         it.putExtra("videoKey", exercisePath)
                         startActivity(it)
+                        finish()
                     }
                 }
 
@@ -110,6 +111,7 @@ class ViewExerciseActivity : AppCompatActivity() {
                     Intent(this, EditActivity::class.java).also {
                         it.putExtra("key", exercisePath)
                         startActivity(it)
+                        finish()
                     }
                 }
 
@@ -117,6 +119,7 @@ class ViewExerciseActivity : AppCompatActivity() {
                     Intent(this, TimerActivity::class.java).also {
                         it.putExtra("timerKey", exercisePath)
                         startActivity(it)
+                        finish()
                     }
                 }
 
