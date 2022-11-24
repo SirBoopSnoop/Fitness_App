@@ -37,6 +37,7 @@ class ViewExerciseActivity : AppCompatActivity() {
                 Intent(this, YouTubeFragment::class.java).also {
                     it.putExtra("videoKey", exercisePath)
                     startActivity(it)
+                    finish()
                 }
             }
 
@@ -44,6 +45,7 @@ class ViewExerciseActivity : AppCompatActivity() {
                 Intent(this, EditActivity::class.java).also {
                     it.putExtra("key", exercisePath)
                     startActivity(it)
+                    finish()
                 }
             }
             R.id.remove_item -> {
@@ -164,36 +166,6 @@ class ViewExerciseActivity : AppCompatActivity() {
         }
         viewData(exercisePath)
     }
-
-/*    override fun onRestart() {
-        super.onRestart()
-        val extras : Bundle? = intent.extras
-        if (extras != null){
-            var value : String? = extras.getString("viewKey")
-            exercisePath = value.toString()
-        }
-        viewData(exercisePath)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        val extras : Bundle? = intent.extras
-        if (extras != null){
-            var value : String? = extras.getString("viewKey")
-            exercisePath = value.toString()
-        }
-        viewData(exercisePath)
-    }*/
-
-/*    override fun onDestroy() {
-        super.onDestroy()
-        val extras : Bundle? = intent.extras
-        if (extras != null){
-            var value : String? = extras.getString("viewKey")
-            exercisePath = value.toString()
-        }
-        viewData(exercisePath)
-    }*/
 
     @SuppressLint("SetTextI18n")
     private fun viewData(path:String){
