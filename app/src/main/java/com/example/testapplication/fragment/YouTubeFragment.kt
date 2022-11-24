@@ -37,10 +37,6 @@ class YouTubeFragment :  YouTubeBaseActivity(){
             viewData(exercisePath)
         }
 
-/*        binding.cancelViewButton.setOnClickListener {
-            finish()
-        }*/
-
         val orientation = resources.configuration.orientation
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             binding.bottomNavigation.visibility = View.GONE

@@ -27,9 +27,6 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
 import com.example.testapplication.model.Exercise
-import com.google.firebase.FirebaseException
-import com.google.firebase.FirebaseNetworkException
-import com.google.firebase.auth.FirebaseAuthException
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -159,7 +156,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onResume() {
         super.onResume()
         connectionDrawLayout()
-//        getExerciseDataFromFirebase()
     }
 
     private fun getExerciseDataFromFirebase() {

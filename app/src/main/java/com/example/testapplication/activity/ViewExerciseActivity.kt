@@ -84,17 +84,6 @@ class ViewExerciseActivity : AppCompatActivity() {
             viewData(exercisePath)
         }
 
-/*        cancel_view_button.setOnClickListener {
-            finish()
-        }
-
-        binding.editButton.setOnClickListener {
-            Intent(this, EditActivity::class.java).also{
-                it.putExtra("key", exercisePath)
-                startActivity(it)
-            }
-        }*/
-
         binding.descriptionButton.setOnClickListener {
             Intent(this, AddDescriptionActivity::class.java).also {
                 it.putExtra("descKey", exercisePath)
@@ -102,35 +91,6 @@ class ViewExerciseActivity : AppCompatActivity() {
             }
         }
 
-/*        binding.deleteViewButton.setOnClickListener  {
-
-            //Check if the user is connected to the database or not
-            if(!isNetworkAvailable()) {
-                Toast.makeText(
-                    baseContext, "Please check your internet connection",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            else {
-                MaterialAlertDialogBuilder(this)
-                    .setTitle("Delete exercise")
-                    .setMessage("Are you sure you want to delete this exercise")
-                    .setNegativeButton("Cancel") {dialog, which ->
-                        showSnackBar("Exercise has not been deleted.")
-                    }
-                    .setPositiveButton("Yes") {dialog, which ->
-                        deleteExercise()
-                    }
-                    .show()
-            }
-        }
-
-        binding.startButton.setOnClickListener {
-            Intent(this, YouTubeFragment::class.java).also{
-                it.putExtra("videoKey", exercisePath)
-                startActivity(it)
-            }
-        }*/
         bottom_navigation.setOnItemSelectedListener { it ->
             when (it.itemId) {
                 R.id.home -> {Intent(this, MainActivity::class.java).also {
@@ -264,53 +224,9 @@ class ViewExerciseActivity : AppCompatActivity() {
                     binding.description.text = description
                 }
 
-/*                if ((video != null) && (video.toString() != "")){
-                getYoutubeVideoIdFromUrl(video.toString())?.let { it1 -> initializePlayer(it1) }
-                }else{
-                    youtubePlay.visibility = View.GONE
-                    errorView.visibility = View.VISIBLE
-                    errorView.text = "No video has been added for this exercise"}*/
-
             }
         }
     }
-
-/*    private fun initializePlayer(videoId : String){
-        val config = YouTubeConfig()
-        youtubePlay.initialize(config.API_KEY,object : YouTubePlayer.OnInitializedListener{
-            override fun onInitializationSuccess(
-                p0: YouTubePlayer.Provider?,
-                p1: YouTubePlayer?,
-                p2: Boolean
-            ) {
-                p1!!.loadVideo(videoId)
-                p1.play()
-            }
-
-            override fun onInitializationFailure(
-                p0: YouTubePlayer.Provider?,
-                p1: YouTubeInitializationResult?
-            ) {
-                Toast.makeText(applicationContext, "Failed to initialize player", Toast.LENGTH_LONG).show()
-                youtubePlay.visibility = View.GONE
-                errorView.visibility = View.VISIBLE
-                errorView.text = "There was an issue initializing the Youtube player. Reason: $p1"
-                println(p1)
-            }
-        })
-    }*/
-
-/*    private fun getYoutubeVideoIdFromUrl(inUrl : String): String?{
-        if (inUrl.lowercase().contains("youtu.be")){
-            return inUrl.substring(inUrl.lastIndexOf("/") + 1)
-        }
-        val pattern = "(?<=watch\\?v=|/videos/|embed\\/)[^#\\&\\?]*"
-        val compiledPattern = Pattern.compile(pattern)
-        val matcher = compiledPattern.matcher(inUrl)
-        return if (matcher.find()){
-            matcher.group()
-        }else null
-    }*/
 
     private fun showSnackBar(message: String) {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()

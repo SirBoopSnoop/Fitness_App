@@ -9,9 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testapplication.R
 import com.example.testapplication.model.Exercise
-import kotlinx.android.synthetic.main.activity_create.view.*
 import kotlinx.android.synthetic.main.recyclerview_design.view.*
-import org.w3c.dom.Text
 
 
 class ExerciseAdapter(private val exerciseList: ArrayList<Exercise>,
@@ -31,7 +29,6 @@ class ExerciseAdapter(private val exerciseList: ArrayList<Exercise>,
         //Based on the position of the recycler view
         val currentItem = exerciseList[position]
         holder.textView1.text = currentItem.exerciseName
-/*        holder.textView2.text = currentItem.category*/
         var cat = currentItem.category.toString().lowercase() + "_icon"
         val imgUri =
             Uri.parse("android.resource://com.example.testapplication/drawable/$cat")
@@ -46,7 +43,6 @@ class ExerciseAdapter(private val exerciseList: ArrayList<Exercise>,
     inner class ExerciseViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         //Grabbing the views from our recycler_design layout file
         val textView1: TextView = itemView.exercise_textView
-/*        val textView2: TextView = itemView.exercise_textView2*/
         val exerciseImage: ImageView = itemView.exercise_image
 
         init {

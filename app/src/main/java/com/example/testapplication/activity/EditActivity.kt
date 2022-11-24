@@ -128,10 +128,6 @@ class EditActivity : AppCompatActivity(){
             dialog.show()
         }
 
-/*        binding.cancelButton.setOnClickListener {
-            finish()
-        }*/
-
         binding.categoryDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
 

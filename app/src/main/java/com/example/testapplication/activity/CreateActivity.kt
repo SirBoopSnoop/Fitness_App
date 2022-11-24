@@ -1,13 +1,11 @@
 package com.example.testapplication.activity
 
 import android.content.Context
-import android.content.DialogInterface
 import android.graphics.Rect
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
-import android.provider.ContactsContract.Data
 import android.text.TextUtils
 import android.view.MotionEvent
 import android.view.View
@@ -17,19 +15,13 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testapplication.R
-import com.example.testapplication.adapter.ExerciseAdapter
 import com.example.testapplication.databinding.ActivityCreateBinding
 import com.example.testapplication.model.Exercise
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_create.*
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.childEvents
-import com.google.firebase.database.ktx.getValue
-import com.google.firebase.database.ktx.snapshots
 
 
 class CreateActivity : AppCompatActivity() {
@@ -71,9 +63,6 @@ class CreateActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-
-            /*checkName(binding.exerciseName.text.toString())*/
-            //checkIfExerciseNameExists()
 
             if (category == null) { // If none of the options are selected
                 Toast.makeText(applicationContext, "Please select a category", Toast.LENGTH_SHORT).show()
